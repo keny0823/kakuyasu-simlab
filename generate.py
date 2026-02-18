@@ -146,11 +146,14 @@ def generate_review(plan, data):
     html += f'<div class="verdict-box"><h3 style="color:var(--primary);border:none">{plan["best_for"]}</h3></div>'
 
     # CTA
+    cta_url = plan['affiliate_url']
     pixel_html = ""
-    if plan.get('affiliate_pixel'):
+    if cta_url.startswith('#'):
+        cta_url = plan['official_url']
+    elif plan.get('affiliate_pixel'):
         pixel_html = f'<img src="{plan["affiliate_pixel"]}" height="1" width="1" border="0" style="position:absolute">'
     html += f"""
-<a href="{plan['affiliate_url']}" class="cta-button" rel="nofollow noopener" target="_blank">
+<a href="{cta_url}" class="cta-button" rel="nofollow noopener" target="_blank">
   {pixel_html}{plan['carrier']}の公式サイトはこちら
   <span class="sub-text">※ お申し込みは公式サイトから</span>
 </a>
