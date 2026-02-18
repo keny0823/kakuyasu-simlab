@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>オッズ資金分配計算機</title>
     <meta name="description" content="競馬のオッズに合わせて資金を自動分配。どの馬がきても利益が出るように計算します。">
+    <!-- OGP / Social Meta Tags -->
+    <meta property="og:title" content="競馬オッズ資金分配計算機 | ダッチング自動計算アプリ">
+    <meta property="og:description" content="総予算とオッズを入力するだけで、どの馬が勝っても利益が出るように資金配分を自動計算。スマートフォン対応、インストール不要の無料PWAアプリ。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://keny0823.github.io/kakuyasu-simlab/odds-calculator/index.html">
+    <meta property="og:image" content="https://keny0823.github.io/kakuyasu-simlab/odds-calculator/icons/icon-512.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="競馬オッズ資金分配アプリ">
+    <meta name="twitter:description" content="オッズに合わせて資金を最適配分解。利益確定・損切りラインも一目でわかる！">
+
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -12,20 +23,40 @@
     <style>
         /* Loading overlay */
         #loading {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #1a1a1a; display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.3s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s;
         }
+
         .spinner {
-            width: 40px; height: 40px; border: 4px solid #333;
-            border-top-color: #00d26a; border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #333;
+            border-top-color: #00d26a;
+            border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div id="loading"><div class="spinner"></div></div>
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
 
     <header class="app-header">
         <h1>🐴 オッズ資金分配</h1>
@@ -48,7 +79,7 @@
                 <h2>候補馬 & オッズ</h2>
                 <span id="horse-count" class="badge">0頭</span>
             </div>
-            
+
             <div id="odds-list">
                 <!-- JavaScriptでここに行を追加 -->
             </div>
@@ -68,7 +99,7 @@
                     <span class="unit">円</span>
                 </div>
             </div>
-            
+
             <div class="profit-info">
                 <div class="profit-item">
                     <span class="label">投資合計</span>
@@ -84,9 +115,29 @@
                 </div>
             </div>
 
-            <!-- アフィリエイト/広告スペース想定 -->
-            <!-- <div class="ad-space">おすすめの馬券購入サイト</div> -->
+            <!-- Share Button -->
+            <button id="share-btn" class="btn-share">
+                <span>✖</span> X(Twitter)で配分をシェア
+            </button>
         </section>
+
+        <!-- SEO Footer / Guide -->
+        <footer class="app-footer">
+            <div class="seo-content">
+                <h3>このアプリについて</h3>
+                <p>
+                    競馬の「ダッチング（Dutching）」計算を簡単に行える無料ツールです。
+                    複数の馬に賭ける際、どの馬が当たっても払い戻し金額が均等になるように資金配分を自動で計算します。
+                </p>
+                <h4>使い方</h4>
+                <ol>
+                    <li>総予算を入力します。</li>
+                    <li>購入したい馬のオッズを入力します。</li>
+                    <li>自動的に最適な購入金額（100円単位）が計算されます。</li>
+                </ol>
+                <p class="copyright">© 2026 Odds Calculator PWA</p>
+            </div>
+        </footer>
     </main>
 
     <script src="app.js"></script>
@@ -97,7 +148,7 @@
             loader.style.opacity = '0';
             setTimeout(() => loader.remove(), 300);
         });
-        
+
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
@@ -106,4 +157,5 @@
         }
     </script>
 </body>
+
 </html>

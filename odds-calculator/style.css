@@ -327,3 +327,137 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+/* Share Button */
+.btn-share {
+    width: 100%;
+    background: #000;
+    /* X brand color */
+    color: white;
+    border: 1px solid #333;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    transition: background 0.2s;
+}
+
+.btn-share span {
+    font-size: 1.2rem;
+}
+
+.btn-share:active {
+    background: #222;
+}
+
+/* Footer / SEO Content */
+.app-footer {
+    margin-top: 40px;
+    color: #666;
+    padding-bottom: 40px;
+}
+
+.seo-content h3 {
+    font-size: 1rem;
+    color: var(--text-sub);
+    margin-bottom: 10px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 4px;
+}
+
+.seo-content h4 {
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    margin: 16px 0 8px;
+}
+
+.seo-content p,
+.seo-content li {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.seo-content ol {
+    padding-left: 20px;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+/* Share Button */
+.btn-share {
+    width: 100%;
+    background: #000;
+    /* X brand color */
+    color: white;
+    border: 1px solid #333;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    transition: background 0.2s;
+}
+
+.btn-share span {
+    font-size: 1.2rem;
+}
+
+.btn-share:active {
+    background: #222;
+}
+
+/* Footer / SEO Content */
+.app-footer {
+    margin-top: 40px;
+    color: #666;
+    padding-bottom: 40px;
+}
+
+.seo-content h3 {
+    font-size: 1rem;
+    color: var(--text-sub);
+    margin-bottom: 10px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 4px;
+}
+
+.seo-content h4 {
+    font-size: 0.9rem;
+    color: var(--text-sub);
+    margin: 16px 0 8px;
+}
+
+.seo-content p,
+.seo-content li {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.seo-content ol {
+    padding-left: 20px;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.8rem;
+    opacity: 0.5;
+}

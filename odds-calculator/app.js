@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
         totalInvestment: document.getElementById('total-investment'),
         expectedProfit: document.getElementById('expected-profit'),
         returnRate: document.getElementById('return-rate'),
-        horseCount: document.getElementById('horse-count')
+        horseCount: document.getElementById('horse-count'),
+        shareBtn: document.getElementById('share-btn')
     };
 
     // --- Init ---
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         renderHorses();
         calculate();
-        
+
         // Event Listeners
         els.budgetInput.addEventListener('input', (e) => {
             state.budget = parseInt(e.target.value) || 0;
@@ -37,13 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         els.addBtn.addEventListener('click', addHorse);
         els.resetBtn.addEventListener('click', resetAll);
+        if (els.shareBtn) els.shareBtn.addEventListener('click', shareResult);
     }
 
     // --- Actions ---
     function addHorse() {
         const newId = (state.horses.length > 0 ? Math.max(...state.horses.map(h => h.id)) : 0) + 1;
         const lastNum = state.horses.length > 0 ? state.horses[state.horses.length - 1].num : 0;
-        
+
         state.horses.push({
             id: newId,
             num: lastNum + 1,
@@ -135,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 3. Distribute Remainder
         let remainder = state.budget - allocatedBudget;
-        
+
         while (remainder >= 100) {
             let bestHorseId = -1;
             let minPayout = Infinity;
@@ -165,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const stake = results[h.id];
             totalInvest += stake;
             const payout = Math.floor(stake * h.odds);
-            
+
             if (payout < minExpReturn) minExpReturn = payout;
             if (payout > maxExpReturn) maxExpReturn = payout;
 
@@ -204,6 +206,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const rate = Math.round((minExpReturn / totalInvest) * 100);
         els.returnRate.textContent = rate;
+    }
+
+    function shareResult() {
+        const validHorses = state.horses.filter(h => h.odds > 0);
+        if (validHorses.length === 0) return;
+
+        let text = `🐴 競馬資金配分\n💰 予算: ${state.budget.toLocaleString()}円\n\n`;
+
+        // Re-calculate simply for text generation
+        let totalImpliedProb = 0;
+        validHorses.forEach(h => totalImpliedProb += (1 / h.odds));
+
+        let allocated = 0;
+        const results = {};
+        validHorses.forEach(h => {
+            let raw = state.budget * ((1 / h.odds) / totalImpliedProb);
+            let val = Math.floor(raw / 100) * 100;
+            results[h.id] = val;
+            allocated += val;
+        });
+
+        // Distribute remainder (simple version for text)
+        let remainder = state.budget - allocated;
+        // Naive distribution for text match: just add to first few
+        // Note: This might slightly differ from exact logic but good enough for share text
+        // or we can implement exact logic. Let's try to match exact logic quickly.
+        while (remainder >= 100) {
+            let bestId = -1; let minP = Infinity;
+            validHorses.forEach(h => {
+                let p = results[h.id] * h.odds;
+                if (p < minP) { minP = p; bestId = h.id; }
+            });
+            if (bestId !== -1) { results[bestId] += 100; remainder -= 100; }
+            else break;
+        }
+
+        validHorses.forEach((h, i) => {
+            const stake = results[h.id];
+            text += `#${h.num} (${h.odds}倍) → ${stake.toLocaleString()}円\n`;
+        });
+
+        const minPayout = Math.min(...validHorses.map(h => Math.floor(results[h.id] * h.odds)));
+        const profit = minPayout - state.budget;
+
+        text += `\n🎯 予想利益: ${profit >= 0 ? '+' : ''}${profit.toLocaleString()}円\n`;
+        text += `#競馬 #オッズ計算 #資金配分`;
+
+        const url = "https://keny0823.github.io/kakuyasu-simlab/odds-calculator/";
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+
+        window.open(shareUrl, '_blank');
     }
 
     window.app = { addHorse, removeHorse, updateHorse, resetAll };
