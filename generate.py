@@ -48,6 +48,7 @@ def html_header(title, description, canonical_path=""):
       </nav>
     </div>
   </header>
+  <div class="pr-disclosure"><span class="pr-badge">PR</span> 当サイトはアフィリエイト広告を含みます</div>
   <main class="main-content">
     <div class="container">
       <div class="article-header">
