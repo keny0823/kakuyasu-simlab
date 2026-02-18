@@ -1,0 +1,21 @@
+{
+    "name": "競馬オッズ資金分配",
+    "short_name": "オッズ計算",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#121212",
+    "theme_color": "#1a1a1a",
+    "description": "競馬のオッズに合わせて資金を自動分配する計算機アプリ",
+    "icons": [
+        {
+            "src": "icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

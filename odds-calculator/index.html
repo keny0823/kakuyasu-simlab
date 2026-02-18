@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>オッズ資金分配計算機</title>
+    <meta name="description" content="競馬のオッズに合わせて資金を自動分配。どの馬がきても利益が出るように計算します。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#1a1a1a">
+    <style>
+        /* Loading overlay */
+        #loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #1a1a1a; display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 0.3s;
+        }
+        .spinner {
+            width: 40px; height: 40px; border: 4px solid #333;
+            border-top-color: #00d26a; border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div id="loading"><div class="spinner"></div></div>
+
+    <header class="app-header">
+        <h1>🐴 オッズ資金分配</h1>
+        <button id="reset-btn" aria-label="リセット">🗑️</button>
+    </header>
+
+    <main class="app-container">
+        <!-- 予算入力 -->
+        <section class="card budget-card">
+            <label for="total-budget">総予算</label>
+            <div class="input-group large">
+                <span class="currency">¥</span>
+                <input type="number" id="total-budget" value="10000" inputmode="numeric" placeholder="金額を入力">
+            </div>
+        </section>
+
+        <!-- オッズ入力リスト -->
+        <section class="card odds-card">
+            <div class="card-header">
+                <h2>候補馬 & オッズ</h2>
+                <span id="horse-count" class="badge">0頭</span>
+            </div>
+            
+            <div id="odds-list">
+                <!-- JavaScriptでここに行を追加 -->
+            </div>
+
+            <button id="add-horse-btn" class="btn-secondary">
+                <span>➕</span> 馬を追加
+            </button>
+        </section>
+
+        <!-- 計算結果表示 -->
+        <section id="result-section" class="card result-card hidden">
+            <div class="result-header">
+                <h2>💰 計算結果</h2>
+                <div class="expected-return">
+                    <small>予想払戻</small>
+                    <span id="expected-payout">0</span>
+                    <span class="unit">円</span>
+                </div>
+            </div>
+            
+            <div class="profit-info">
+                <div class="profit-item">
+                    <span class="label">投資合計</span>
+                    <span id="total-investment">0</span>円
+                </div>
+                <div class="profit-item highlight">
+                    <span class="label">予想利益</span>
+                    <span id="expected-profit">+0</span>円
+                </div>
+                <div class="profit-item">
+                    <span class="label">回収率</span>
+                    <span id="return-rate">0</span>%
+                </div>
+            </div>
+
+            <!-- アフィリエイト/広告スペース想定 -->
+            <!-- <div class="ad-space">おすすめの馬券購入サイト</div> -->
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        // Simple loading screen hider
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loading');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 300);
+        });
+        
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('SW registered!', reg))
+                .catch(err => console.log('SW failed', err));
+        }
+    </script>
+</body>
+</html>
