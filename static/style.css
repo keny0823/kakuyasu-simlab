@@ -635,38 +635,174 @@ body::before {
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 640px) {
+
+/* Tablet */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .main-content {
+    padding: 32px 0 60px;
+  }
+
   .article-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
-  .plan-price .price-value {
-    font-size: 2.2rem;
+  .article-body h2 {
+    font-size: 1.15rem;
+    margin: 36px 0 16px;
+    padding: 14px 16px;
   }
 
-  .plan-card-header {
-    padding: 16px 20px;
+  .article-body h3 {
+    font-size: 1rem;
   }
 
-  .plan-card-body {
+  .plan-card-header h3 {
+    font-size: 1.2rem !important;
+  }
+
+  .verdict-box {
     padding: 20px;
   }
 
-  .compare-table {
-    font-size: 0.8rem;
+  .related-articles {
+    padding: 20px;
   }
 
-  .compare-table th,
-  .compare-table td {
-    padding: 10px 8px;
+  /* Make wide tables scrollable */
+  .article-body>div[style*="overflow-x"] {
+    margin: 16px -16px;
+    padding: 0 16px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+
+  .site-header {
+    padding: 10px 0;
+  }
+
+  .site-header .container {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .site-logo {
+    font-size: 1.2rem;
   }
 
   .site-nav {
     display: none;
   }
 
+  .article-header {
+    margin-bottom: 28px;
+  }
+
+  .article-header h1 {
+    font-size: 1.35rem;
+    line-height: 1.5;
+  }
+
+  .plan-price .price-value {
+    font-size: 2.2rem;
+  }
+
+  .plan-card {
+    margin: 20px -8px;
+    border-radius: var(--radius);
+  }
+
+  .plan-card-header {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .plan-card-header .rank-badge {
+    font-size: 1.6rem;
+  }
+
+  .plan-card-header h3 {
+    font-size: 1.1rem !important;
+  }
+
+  .plan-card-body {
+    padding: 18px 16px;
+  }
+
+  .spec-table th,
+  .spec-table td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .spec-table th {
+    width: 38%;
+  }
+
+  .compare-table {
+    font-size: 0.78rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+
   .cta-button {
     font-size: 1rem;
-    padding: 16px 24px;
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+  }
+
+  .cta-button .sub-text {
+    font-size: 0.75rem;
+  }
+
+  .feature-tags {
+    gap: 6px;
+  }
+
+  .feature-tag {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+
+  .verdict-box {
+    padding: 16px;
+    margin: 20px 0;
+  }
+
+  .verdict-box h3 {
+    font-size: 1.05rem;
+  }
+
+  .info-box {
+    padding: 16px;
+  }
+
+  .article-body ul,
+  .article-body ol {
+    margin-left: 16px;
+  }
+
+  .site-footer {
+    padding: 32px 0;
+  }
+
+  .site-footer .disclaimer {
+    font-size: 0.7rem;
+    padding: 0 12px;
   }
 }
