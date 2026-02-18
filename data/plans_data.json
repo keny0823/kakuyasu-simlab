@@ -1,0 +1,554 @@
+{
+    "sim_plans": [
+        {
+            "id": "ahamo",
+            "carrier": "ahamo",
+            "parent": "ドコモ",
+            "monthly_price": 2970,
+            "data_gb": 20,
+            "data_gb_large": 100,
+            "large_plan_price": 4950,
+            "call_included": "5分かけ放題",
+            "network": "ドコモ 4G/5G",
+            "speed_down": "最大4.2Gbps",
+            "min_contract": "なし",
+            "initial_cost": 0,
+            "esim": true,
+            "overseas": true,
+            "family_discount": false,
+            "features": [
+                "ドコモ回線で安心の通信品質",
+                "5分以内の国内通話無料",
+                "海外82カ国で追加料金なし",
+                "dカード支払いで+5GB"
+            ],
+            "cons": [
+                "店頭サポートなし（原則オンライン）",
+                "データ繰り越し不可",
+                "留守番電話非対応"
+            ],
+            "best_for": "通信品質を重視しつつ、料金も抑えたい人",
+            "affiliate_url": "#ahamo-affiliate",
+            "official_url": "https://ahamo.com/",
+            "logo_emoji": "🔵"
+        },
+        {
+            "id": "linemo",
+            "carrier": "LINEMO",
+            "parent": "ソフトバンク",
+            "monthly_price": 990,
+            "data_gb": 3,
+            "data_gb_large": 20,
+            "large_plan_price": 2728,
+            "call_included": "なし（オプション+550円）",
+            "network": "ソフトバンク 4G/5G",
+            "speed_down": "最大3.0Gbps",
+            "min_contract": "なし",
+            "initial_cost": 0,
+            "esim": true,
+            "overseas": false,
+            "family_discount": false,
+            "features": [
+                "LINEギガフリー（LINEのデータ消費ゼロ）",
+                "ミニプラン990円は業界最安級",
+                "ソフトバンク回線で高品質",
+                "PayPayポイント還元キャンペーン多数"
+            ],
+            "cons": [
+                "店頭サポートなし",
+                "留守番電話非対応",
+                "データ繰り越し不可"
+            ],
+            "best_for": "LINEを多用する人、とにかく安さを重視する人",
+            "affiliate_url": "#linemo-affiliate",
+            "official_url": "https://www.linemo.jp/",
+            "logo_emoji": "🟢"
+        },
+        {
+            "id": "rakuten",
+            "carrier": "楽天モバイル",
+            "parent": "楽天",
+            "monthly_price": 1078,
+            "data_gb": 3,
+            "data_gb_large": -1,
+            "large_plan_price": 3278,
+            "call_included": "Rakuten Link利用で国内通話無料",
+            "network": "楽天 4G/5G + au 4G",
+            "speed_down": "最大2.8Gbps",
+            "min_contract": "なし",
+            "initial_cost": 0,
+            "esim": true,
+            "overseas": true,
+            "family_discount": true,
+            "features": [
+                "データ無制限で3,278円は業界最安",
+                "Rakuten Linkで通話完全無料",
+                "楽天ポイントが貯まる・使える",
+                "海外でも2GBまで無料"
+            ],
+            "cons": [
+                "地下やビル内で繋がりにくい場合あり",
+                "Rakuten Linkの通話品質がやや不安定",
+                "パートナー回線エリアでは速度制限あり"
+            ],
+            "best_for": "データをたくさん使う人、楽天経済圏の人",
+            "affiliate_url": "#rakuten-affiliate",
+            "official_url": "https://mobile.rakuten.co.jp/",
+            "logo_emoji": "🔴"
+        },
+        {
+            "id": "uqmobile",
+            "carrier": "UQモバイル",
+            "parent": "au",
+            "monthly_price": 2365,
+            "data_gb": 4,
+            "data_gb_large": 20,
+            "large_plan_price": 3278,
+            "call_included": "なし（オプション+550円〜）",
+            "network": "au 4G/5G",
+            "speed_down": "最大4.2Gbps",
+            "min_contract": "なし",
+            "initial_cost": 3850,
+            "esim": true,
+            "overseas": false,
+            "family_discount": true,
+            "features": [
+                "au回線で安定した通信品質",
+                "データ繰り越し可能",
+                "節約モードでデータ消費ゼロ",
+                "全国のauショップで対面サポート"
+            ],
+            "cons": [
+                "最安プランでも2,365円とやや高め",
+                "初期費用3,850円がかかる",
+                "割引なしだと割高"
+            ],
+            "best_for": "店頭サポートが欲しい人、au回線を安く使いたい人",
+            "affiliate_url": "#uq-affiliate",
+            "official_url": "https://www.uqwimax.jp/",
+            "logo_emoji": "🟣"
+        },
+        {
+            "id": "ymobile",
+            "carrier": "ワイモバイル",
+            "parent": "ソフトバンク",
+            "monthly_price": 2365,
+            "data_gb": 4,
+            "data_gb_large": 30,
+            "large_plan_price": 4015,
+            "call_included": "なし（オプション+880円）",
+            "network": "ソフトバンク 4G/5G",
+            "speed_down": "最大3.0Gbps",
+            "min_contract": "なし",
+            "initial_cost": 3850,
+            "esim": true,
+            "overseas": false,
+            "family_discount": true,
+            "features": [
+                "家族割で2回線目以降1,100円引き",
+                "Yahoo!プレミアム特典が無料",
+                "全国のソフトバンクショップで対面サポート",
+                "PayPay還元が充実"
+            ],
+            "cons": [
+                "1人で使うと割高",
+                "初期費用3,850円",
+                "オンライン専用プランより高め"
+            ],
+            "best_for": "家族で乗り換えたい人、Yahoo!/PayPayユーザー",
+            "affiliate_url": "#ymobile-affiliate",
+            "official_url": "https://www.ymobile.jp/",
+            "logo_emoji": "🔴"
+        },
+        {
+            "id": "povo",
+            "carrier": "povo2.0",
+            "parent": "au",
+            "monthly_price": 0,
+            "data_gb": 0,
+            "data_gb_large": -1,
+            "large_plan_price": -1,
+            "call_included": "なし（トッピング式）",
+            "network": "au 4G/5G",
+            "speed_down": "最大4.2Gbps",
+            "min_contract": "なし",
+            "initial_cost": 0,
+            "esim": true,
+            "overseas": false,
+            "family_discount": false,
+            "features": [
+                "基本料0円から使える",
+                "必要な時だけデータを購入（トッピング）",
+                "24時間データ使い放題330円",
+                "au回線で高品質"
+            ],
+            "cons": [
+                "180日間トッピングなしだと利用停止",
+                "サポートはオンラインのみ",
+                "料金体系がやや複雑"
+            ],
+            "best_for": "サブ回線として持ちたい人、使う月と使わない月の差が大きい人",
+            "affiliate_url": "#povo-affiliate",
+            "official_url": "https://povo.jp/",
+            "logo_emoji": "🟡"
+        },
+        {
+            "id": "mineo",
+            "carrier": "mineo",
+            "parent": "ドコモ/au/ソフトバンク",
+            "monthly_price": 1298,
+            "data_gb": 5,
+            "data_gb_large": 20,
+            "large_plan_price": 2178,
+            "call_included": "なし（オプション+550円）",
+            "network": "ドコモ/au/ソフトバンク（選択制）",
+            "speed_down": "最大1.5Mbps（パケット放題Plus時）",
+            "min_contract": "なし",
+            "initial_cost": 3300,
+            "esim": true,
+            "overseas": false,
+            "family_discount": true,
+            "features": [
+                "3大キャリアから回線を選べる",
+                "パケット放題Plus（1.5Mbps使い放題）が人気",
+                "マイネ王コミュニティが充実",
+                "フリータンクでユーザー同士のパケットシェア"
+            ],
+            "cons": [
+                "通信速度が昼休みに遅くなりやすい",
+                "初期費用3,300円がかかる",
+                "店頭サポートが限定的"
+            ],
+            "best_for": "コミュニティ重視の人、回線を自由に選びたい人",
+            "affiliate_url": "#mineo-affiliate",
+            "official_url": "https://mineo.jp/",
+            "logo_emoji": "🟢"
+        },
+        {
+            "id": "iijmio",
+            "carrier": "IIJmio",
+            "parent": "IIJ（ドコモ/au）",
+            "monthly_price": 850,
+            "data_gb": 5,
+            "data_gb_large": 20,
+            "large_plan_price": 2000,
+            "call_included": "なし（オプション+500円）",
+            "network": "ドコモ/au（選択制）",
+            "speed_down": "最大1.1Gbps",
+            "min_contract": "なし（データSIMは即解約可）",
+            "initial_cost": 3300,
+            "esim": true,
+            "overseas": false,
+            "family_discount": true,
+            "features": [
+                "5GBで850円は業界最安クラス",
+                "端末セール（110円〜）の頻度が高い",
+                "データシェア・繰り越しに対応",
+                "老舗プロバイダの信頼性"
+            ],
+            "cons": [
+                "通信速度が混雑時に低下しやすい",
+                "店頭サポートが少ない",
+                "通話品質は標準的"
+            ],
+            "best_for": "とにかく月額を抑えたい人、端末をセットで安く買いたい人",
+            "affiliate_url": "#iijmio-affiliate",
+            "official_url": "https://www.iijmio.jp/",
+            "logo_emoji": "🔴"
+        },
+        {
+            "id": "irumo",
+            "carrier": "irumo",
+            "parent": "ドコモ",
+            "monthly_price": 550,
+            "data_gb": 0.5,
+            "data_gb_large": 9,
+            "large_plan_price": 3377,
+            "call_included": "なし（オプション+880円）",
+            "network": "ドコモ 4G/5G",
+            "speed_down": "最大4.2Gbps",
+            "min_contract": "なし",
+            "initial_cost": 3850,
+            "esim": true,
+            "overseas": false,
+            "family_discount": true,
+            "features": [
+                "ドコモ回線が550円から使える",
+                "ドコモショップで対面サポート可能",
+                "dカードお支払割で187円引き",
+                "みんなドコモ割のカウント対象"
+            ],
+            "cons": [
+                "0.5GBプランは実質電話用",
+                "データ容量の選択肢が少ない（0.5/3/6/9GB）",
+                "ahamoと比べると割高感あり"
+            ],
+            "best_for": "ドコモのまま安くしたい人、最低限の通信でOKな人",
+            "affiliate_url": "#irumo-affiliate",
+            "official_url": "https://irumo.docomo.ne.jp/",
+            "logo_emoji": "🔵"
+        },
+        {
+            "id": "nuro",
+            "carrier": "NUROモバイル",
+            "parent": "ソニー",
+            "monthly_price": 792,
+            "data_gb": 5,
+            "data_gb_large": 20,
+            "large_plan_price": 2699,
+            "call_included": "なし（オプション+490円）",
+            "network": "ドコモ/au/ソフトバンク（選択制）",
+            "speed_down": "最大1.1Gbps",
+            "min_contract": "なし",
+            "initial_cost": 3740,
+            "esim": true,
+            "overseas": false,
+            "family_discount": false,
+            "features": [
+                "5GBで792円は格安SIM最安級",
+                "NEOプランは専用帯域で速い",
+                "バリューデータフリー（LINE/Twitter無料）",
+                "Gigaプラスで3ヶ月ごとにデータ追加"
+            ],
+            "cons": [
+                "NEOプラン以外は速度にムラあり",
+                "店頭サポートなし",
+                "知名度がやや低い"
+            ],
+            "best_for": "コスパ最強を求める人、SNSをよく使う人",
+            "affiliate_url": "#nuro-affiliate",
+            "official_url": "https://mobile.nuro.jp/",
+            "logo_emoji": "🟣"
+        },
+        {
+            "id": "nihontsushin",
+            "carrier": "日本通信SIM",
+            "parent": "日本通信",
+            "monthly_price": 290,
+            "data_gb": 1,
+            "data_gb_large": 10,
+            "large_plan_price": 1390,
+            "call_included": "合理的プランは無料通話70分付き",
+            "network": "ドコモ 4G/5G",
+            "speed_down": "最大1.1Gbps",
+            "min_contract": "なし",
+            "initial_cost": 3300,
+            "esim": true,
+            "overseas": false,
+            "family_discount": false,
+            "features": [
+                "月290円は日本最安（1GB）",
+                "合理的みんなのプランは10GB+70分通話で1,390円",
+                "ドコモ回線で全国カバー",
+                "シンプルな料金体系"
+            ],
+            "cons": [
+                "通信速度は遅め",
+                "サポートはメール中心",
+                "知名度が低く情報が少ない"
+            ],
+            "best_for": "1円でも安くしたい人、電話もそこそこ使いたい人",
+            "affiliate_url": "#nihontsushin-affiliate",
+            "official_url": "https://www.nihontsushin.com/",
+            "logo_emoji": "🔵"
+        }
+    ],
+    "compare_pairs": [
+        [
+            "ahamo",
+            "linemo"
+        ],
+        [
+            "ahamo",
+            "rakuten"
+        ],
+        [
+            "ahamo",
+            "povo"
+        ],
+        [
+            "ahamo",
+            "irumo"
+        ],
+        [
+            "linemo",
+            "rakuten"
+        ],
+        [
+            "linemo",
+            "povo"
+        ],
+        [
+            "linemo",
+            "nuro"
+        ],
+        [
+            "uqmobile",
+            "ymobile"
+        ],
+        [
+            "uqmobile",
+            "ahamo"
+        ],
+        [
+            "iijmio",
+            "mineo"
+        ],
+        [
+            "iijmio",
+            "nuro"
+        ],
+        [
+            "iijmio",
+            "linemo"
+        ],
+        [
+            "iijmio",
+            "nihontsushin"
+        ],
+        [
+            "mineo",
+            "nuro"
+        ],
+        [
+            "mineo",
+            "rakuten"
+        ],
+        [
+            "rakuten",
+            "povo"
+        ],
+        [
+            "rakuten",
+            "ymobile"
+        ],
+        [
+            "nihontsushin",
+            "irumo"
+        ],
+        [
+            "nihontsushin",
+            "linemo"
+        ],
+        [
+            "nuro",
+            "povo"
+        ]
+    ],
+    "ranking_articles": [
+        {
+            "id": "overall",
+            "title": "格安SIM おすすめランキング",
+            "description": "2026年最新の格安SIMを徹底比較。料金・速度・サポートの総合力でランキング。",
+            "ranking_order": [
+                "ahamo",
+                "rakuten",
+                "linemo",
+                "iijmio",
+                "uqmobile",
+                "mineo",
+                "ymobile",
+                "nuro",
+                "povo",
+                "irumo",
+                "nihontsushin"
+            ],
+            "target_keyword": "格安SIM おすすめ"
+        },
+        {
+            "id": "cheapest",
+            "title": "とにかく安い格安SIM ランキング",
+            "description": "月額料金の安さだけにフォーカス。1円でも安くしたい人のためのランキング。",
+            "ranking_order": [
+                "nihontsushin",
+                "povo",
+                "irumo",
+                "nuro",
+                "iijmio",
+                "linemo",
+                "mineo",
+                "rakuten",
+                "uqmobile",
+                "ymobile",
+                "ahamo"
+            ],
+            "target_keyword": "格安SIM 安い"
+        },
+        {
+            "id": "unlimited",
+            "title": "データ無制限で使える格安SIM",
+            "description": "ギガを気にせず使いたい人向け。無制限プランのある格安SIMを厳選。",
+            "ranking_order": [
+                "rakuten",
+                "povo",
+                "mineo",
+                "ahamo",
+                "nuro",
+                "ymobile",
+                "uqmobile",
+                "linemo",
+                "iijmio",
+                "irumo",
+                "nihontsushin"
+            ],
+            "target_keyword": "格安SIM データ無制限"
+        },
+        {
+            "id": "speed",
+            "title": "通信速度が速い格安SIM ランキング",
+            "description": "速度重視で選ぶならこれ！実測速度の評判が良い格安SIMを厳選。",
+            "ranking_order": [
+                "ahamo",
+                "uqmobile",
+                "povo",
+                "ymobile",
+                "linemo",
+                "rakuten",
+                "nuro",
+                "irumo",
+                "iijmio",
+                "mineo",
+                "nihontsushin"
+            ],
+            "target_keyword": "格安SIM 速度 速い"
+        },
+        {
+            "id": "family",
+            "title": "家族で使うとお得な格安SIM ランキング",
+            "description": "家族割やデータシェアが充実。家族みんなで乗り換えるならこの格安SIM。",
+            "ranking_order": [
+                "ymobile",
+                "uqmobile",
+                "mineo",
+                "iijmio",
+                "rakuten",
+                "irumo",
+                "ahamo",
+                "linemo",
+                "nuro",
+                "povo",
+                "nihontsushin"
+            ],
+            "target_keyword": "格安SIM 家族"
+        },
+        {
+            "id": "support",
+            "title": "店頭サポートがある格安SIM ランキング",
+            "description": "対面で相談できる安心感。店舗サポートが充実している格安SIMを紹介。",
+            "ranking_order": [
+                "uqmobile",
+                "ymobile",
+                "irumo",
+                "rakuten",
+                "mineo",
+                "ahamo",
+                "iijmio",
+                "linemo",
+                "nuro",
+                "povo",
+                "nihontsushin"
+            ],
+            "target_keyword": "格安SIM 店舗 サポート"
+        }
+    ]
+}
