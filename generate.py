@@ -82,6 +82,25 @@ def html_footer(related_links=None):
 </html>"""
 
 
+def make_cta_html(plan, label=None, sub_text=None):
+    """Generate CTA button HTML with affiliate/official URL fallback."""
+    cta_url = plan['affiliate_url']
+    pixel_html = ""
+    if cta_url.startswith('#'):
+        cta_url = plan['official_url']
+    elif plan.get('affiliate_pixel'):
+        pixel_html = f'<img src="{plan["affiliate_pixel"]}" height="1" width="1" border="0" style="position:absolute">'
+    if label is None:
+        label = f"{plan['carrier']}の公式サイトはこちら"
+    if sub_text is None:
+        sub_text = "※ お申し込みは公式サイトから"
+    return f"""
+<a href="{cta_url}" class="cta-button" rel="nofollow noopener" target="_blank">
+  {pixel_html}{label}
+  <span class="sub-text">{sub_text}</span>
+</a>
+"""
+
 # --- Review Article Generator ---
 def generate_review(plan, data):
     """Generate a single plan review article."""
@@ -146,18 +165,7 @@ def generate_review(plan, data):
     html += f'<div class="verdict-box"><h3 style="color:var(--primary);border:none">{plan["best_for"]}</h3></div>'
 
     # CTA
-    cta_url = plan['affiliate_url']
-    pixel_html = ""
-    if cta_url.startswith('#'):
-        cta_url = plan['official_url']
-    elif plan.get('affiliate_pixel'):
-        pixel_html = f'<img src="{plan["affiliate_pixel"]}" height="1" width="1" border="0" style="position:absolute">'
-    html += f"""
-<a href="{cta_url}" class="cta-button" rel="nofollow noopener" target="_blank">
-  {pixel_html}{plan['carrier']}の公式サイトはこちら
-  <span class="sub-text">※ お申し込みは公式サイトから</span>
-</a>
-"""
+    html += make_cta_html(plan)
 
     # Related
     related = []
@@ -247,14 +255,8 @@ def generate_comparison(plan_a, plan_b, data):
 """
 
     # CTAs
-    html += f"""
-<a href="{plan_a['affiliate_url']}" class="cta-button" rel="nofollow noopener" target="_blank">
-  {plan_a['carrier']}の公式サイトはこちら
-</a>
-<a href="{plan_b['affiliate_url']}" class="cta-button" rel="nofollow noopener" target="_blank">
-  {plan_b['carrier']}の公式サイトはこちら
-</a>
-"""
+    html += make_cta_html(plan_a)
+    html += make_cta_html(plan_b)
     
     related = [
         (f"{plan_a['carrier']}の詳細レビュー", f"review_{plan_a['id']}.html"),
@@ -311,11 +313,8 @@ def generate_ranking(ranking_def, data):
         html += """</div>
     <p style="margin-top:12px"><strong>こんな人におすすめ：</strong>""" + plan['best_for'] + """</p>"""
         
+        html += make_cta_html(plan, label=f"{plan['carrier']}を申し込む", sub_text="※ 公式サイトへ移動します")
         html += f"""
-    <a href="{plan['affiliate_url']}" class="cta-button" rel="nofollow noopener" target="_blank">
-      {plan['carrier']}を申し込む
-      <span class="sub-text">※ 公式サイトへ移動します</span>
-    </a>
     <p style="text-align:center"><a href="review_{plan['id']}.html">→ {plan['carrier']}の詳細レビューを読む</a></p>
   </div>
 </div>
