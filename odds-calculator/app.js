@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         totalInvestment: document.getElementById('total-investment'),
         expectedProfit: document.getElementById('expected-profit'),
         returnRate: document.getElementById('return-rate'),
+        syntheticOdds: document.getElementById('synthetic-odds'),
         horseCount: document.getElementById('horse-count'),
         shareBtn: document.getElementById('share-btn')
     };
@@ -206,6 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const rate = Math.round((minExpReturn / totalInvest) * 100);
         els.returnRate.textContent = rate;
+
+        // 合成オッズ = 1 ÷ 各オッズの逆数の合計
+        const syntheticOdds = (1 / totalImpliedProb).toFixed(2);
+        els.syntheticOdds.textContent = syntheticOdds;
     }
 
     function shareResult() {
