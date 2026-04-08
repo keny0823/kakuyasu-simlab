@@ -214,6 +214,7 @@ h1, h2, h3 {
   max-width: 19ch;
   word-break: keep-all;
   overflow-wrap: anywhere;
+  text-wrap: unset;
 }
 
 .page-hero h1 {
@@ -221,6 +222,10 @@ h1, h2, h3 {
 }
 
 .hero-home h1 span {
+  display: block;
+}
+
+.hero-line {
   display: block;
 }
 
