@@ -1,5 +1,7 @@
 {
-  "generator": "local-design-rebuild",
-  "title": "格安SIMヒーロー画像",
-  "note": "Nanobanana2最終差し替えまでのサイト改善用PNG"
+  "generator": "Nanobanana2",
+  "asset_id": "hero_main",
+  "source_file": "C:\\Users\\since\\Downloads\\Gemini_Generated_Image_i19p0bi19p0bi19p.png",
+  "target_path": "static/images/hero-sim-network.png",
+  "size": "1536x1024"
 }
