@@ -18,7 +18,9 @@ def run(script_name: str) -> None:
 
 
 def main() -> int:
+    run("generate_site_images.py")
     run("generate.py")
+    run("postprocess_generated_html.py")
     run("quality_check.py")
     print("BUILD AND CHECK COMPLETED")
     return 0
