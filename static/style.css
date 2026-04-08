@@ -157,8 +157,8 @@ img {
 
 .hero-home {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.88fr);
-  gap: 30px;
+  grid-template-columns: minmax(0, 1.18fr) minmax(360px, 0.82fr);
+  gap: 26px;
   padding: 36px;
   box-shadow: var(--shadow-lg);
 }
@@ -202,9 +202,9 @@ h1, h2, h3 {
 .page-hero h1 {
   margin-top: 14px;
   font-family: "Noto Sans JP", "Inter", sans-serif;
-  font-size: clamp(1.52rem, 1.85vw, 2.42rem);
+  font-size: clamp(1.55rem, 1.9vw, 2.5rem);
   line-height: 1.34;
-  max-width: 13.5ch;
+  max-width: 19ch;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -223,6 +223,17 @@ h1, h2, h3 {
 .visual-mini-card p,
 .content-card p,
 .methodology-card p {
+  color: var(--text-soft);
+}
+
+.hero-copy > p {
+  max-width: 33rem;
+  font-size: 1rem;
+}
+
+.section-lead {
+  max-width: 40rem;
+  margin: 10px 0 0;
   color: var(--text-soft);
 }
 
@@ -358,6 +369,54 @@ h1, h2, h3 {
   gap: 12px;
 }
 
+.hero-offer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hero-offer-card {
+  border-radius: 18px;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 248, 255, 0.95));
+  border: 1px solid rgba(225, 235, 246, 0.9);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-offer-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.hero-offer-head strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.hero-offer-head p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.hero-offer-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+
+.hero-offer-meta span {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(19, 34, 56, 0.06);
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
 .visual-mini-card {
   padding: 14px;
   border-radius: var(--radius-md);
@@ -416,7 +475,7 @@ h1, h2, h3 {
 }
 
 .category-link {
-  min-height: 180px;
+  min-height: 168px;
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -444,8 +503,8 @@ h1, h2, h3 {
 
 .category-link small {
   color: var(--text-soft);
-  font-size: 0.92rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.55;
 }
 
 .quick-link-card,
@@ -461,6 +520,30 @@ h1, h2, h3 {
   box-shadow: var(--shadow-md);
 }
 
+.quick-link-card:nth-child(1),
+.category-link:nth-child(1),
+.category-link:nth-child(4) {
+  background:
+    radial-gradient(circle at top right, rgba(31, 105, 255, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(240, 247, 255, 0.96));
+}
+
+.quick-link-card:nth-child(2),
+.category-link:nth-child(2),
+.category-link:nth-child(5) {
+  background:
+    radial-gradient(circle at top right, rgba(6, 185, 212, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(241, 250, 252, 0.96));
+}
+
+.quick-link-card:nth-child(3),
+.category-link:nth-child(3),
+.category-link:nth-child(6) {
+  background:
+    radial-gradient(circle at top right, rgba(255, 176, 87, 0.16), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(253, 248, 241, 0.96));
+}
+
 .quick-link-card strong,
 .spotlight-card h3 {
   display: block;
@@ -472,6 +555,7 @@ h1, h2, h3 {
 .spotlight-note {
   margin: 0;
   color: var(--text-soft);
+  line-height: 1.55;
 }
 
 .quick-link-tag,
@@ -511,6 +595,11 @@ h1, h2, h3 {
 .content-card {
   border-radius: var(--radius-lg);
   padding: 24px;
+}
+
+.feature-band-card .card-grid,
+.feature-band-card .spotlight-grid {
+  margin-top: 18px;
 }
 
 .feature-band-card {
@@ -599,6 +688,14 @@ h1, h2, h3 {
 
 .plan-card {
   padding: 22px;
+}
+
+.plan-card.compact .feature-list {
+  display: none;
+}
+
+.plan-card.compact .plan-audience {
+  min-height: 3.3em;
 }
 
 .plan-card-top {
@@ -714,7 +811,8 @@ h1, h2, h3 {
 .plan-audience {
   margin: 16px 0 0;
   color: var(--text-soft);
-  font-size: 0.96rem;
+  font-size: 0.94rem;
+  line-height: 1.65;
 }
 
 .feature-list,
@@ -765,6 +863,25 @@ h1, h2, h3 {
 
 .table-wrap {
   overflow-x: auto;
+}
+
+.compact-cta {
+  min-width: 0;
+  width: 100%;
+}
+
+.light-link {
+  display: inline-flex;
+  margin-top: 16px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.checklist-note {
+  margin: 0;
+  color: rgba(238, 244, 255, 0.92);
+  line-height: 1.7;
 }
 
 .compact-table th,
@@ -836,6 +953,7 @@ h1, h2, h3 {
 
   .hero-summary-grid,
   .visual-mini-grid,
+  .hero-offer-grid,
   .card-grid,
   .category-grid,
   .quick-link-grid,
@@ -868,8 +986,12 @@ h1, h2, h3 {
 
   .hero-home h1,
   .page-hero h1 {
-    font-size: 1.7rem;
+    font-size: 1.48rem;
     max-width: none;
+  }
+
+  .hero-offer-grid {
+    grid-template-columns: 1fr;
   }
 
   .hero-summary-grid,
