@@ -41,6 +41,13 @@ body {
     radial-gradient(circle at top right, rgba(6, 185, 212, 0.08), transparent 18%),
     linear-gradient(180deg, #f7fafe 0%, #eef3f9 100%);
   line-height: 1.72;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+  word-break: auto-phrase;
 }
 
 body::before {

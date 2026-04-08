@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>オッズ資金分配計算機</title>
-    <meta name="description" content="競馬のオッズに合わせて資金を自動分配。どの馬がきても利益が出るように計算します。">
+    <title>オチE��賁E��刁E�E計算橁E/title>
+    <meta name="description" content="競馬のオチE��に合わせて賁E��を�E動�E配。どの馬がきても利益が出るよぁE��計算します、E>
     <!-- OGP / Social Meta Tags -->
-    <meta property="og:title" content="競馬オッズ資金分配計算機 | ダッチング自動計算アプリ">
-    <meta property="og:description" content="総予算とオッズを入力するだけで、どの馬が勝っても利益が出るように資金配分を自動計算。スマートフォン対応、インストール不要の無料PWAアプリ。">
+    <meta property="og:title" content="競馬オチE��賁E��刁E�E計算橁E| ダチE��ング自動計算アプリ">
+    <meta property="og:description" content="総予算とオチE��を�E力するだけで、どの馬が勝っても利益が出るよぁE��賁E��配�Eを�E動計算。スマ�Eトフォン対応、インスト�Eル不要�E無料PWAアプリ、E>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://keny0823.github.io/kakuyasu-simlab/odds-calculator/index.html">
     <meta property="og:image" content="https://keny0823.github.io/kakuyasu-simlab/odds-calculator/icons/icon-512.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="競馬オッズ資金分配アプリ">
-    <meta name="twitter:description" content="オッズに合わせて資金を最適配分解。利益確定・損切りラインも一目でわかる！">
+    <meta name="twitter:title" content="競馬オチE��賁E��刁E�Eアプリ">
+    <meta name="twitter:description" content="オチE��に合わせて賁E��を最適配�E解。利益確定�E損�Eりラインも一目でわかる！E>
 
-    <link rel="stylesheet" href="style.css?v=2.1">
+    <link rel="stylesheet" href="style.css?v=3.0">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
     <meta name="theme-color" content="#1a1a1a">
@@ -59,24 +59,24 @@
     </div>
 
     <header class="app-header">
-        <h1>🐴 オッズ資金分配</h1>
-        <button id="reset-btn" aria-label="リセット">🗑️</button>
+        <h1>🐴 オチE��賁E��刁E�E</h1>
+        <button id="reset-btn" aria-label="リセチE��">🗑�E�E/button>
     </header>
 
     <main class="app-container">
-        <!-- 予算入力 -->
+        <!-- 予算�E劁E-->
         <section class="card budget-card">
-            <label for="total-budget">総予算</label>
+            <label for="total-budget">総予箁E/label>
             <div class="input-group large">
                 <span class="currency">¥</span>
-                <input type="number" id="total-budget" value="10000" inputmode="numeric" placeholder="金額を入力">
+                <input type="number" id="total-budget" value="10000" inputmode="numeric" placeholder="金額を入劁E>
             </div>
         </section>
 
-        <!-- オッズ入力リスト -->
+        <!-- オチE��入力リスチE-->
         <section class="card odds-card">
             <div class="card-header">
-                <h2>候補馬 & オッズ</h2>
+                <h2>候補馬 & オチE��</h2>
                 <span id="horse-count" class="badge">0頭</span>
             </div>
 
@@ -85,7 +85,7 @@
             </div>
 
             <button id="add-horse-btn" class="btn-secondary">
-                <span>➕</span> 馬を追加
+                <span>➁E/span> 馬を追加
             </button>
         </section>
 
@@ -96,26 +96,26 @@
                 <div class="expected-return">
                     <small>予想払戻</small>
                     <span id="expected-payout">0</span>
-                    <span class="unit">円</span>
+                    <span class="unit">冁E/span>
                 </div>
             </div>
 
             <div class="profit-info">
                 <div class="profit-item">
-                    <span class="label">投資合計</span>
-                    <span id="total-investment">0</span>円
+                    <span class="label">投賁E��訁E/span>
+                    <span id="total-investment">0</span>冁E
                 </div>
                 <div class="profit-item highlight">
-                    <span class="label">予想利益</span>
-                    <span id="expected-profit">+0</span>円
+                    <span class="label">予想利盁E/span>
+                    <span id="expected-profit">+0</span>冁E
                 </div>
                 <div class="profit-item">
-                    <span class="label">回収率</span>
+                    <span class="label">回収玁E/span>
                     <span id="return-rate">0</span>%
                 </div>
                 <div class="profit-item">
-                    <span class="label">合成オッズ</span>
-                    <span id="synthetic-odds">0.0</span>倍
+                    <span class="label">合�EオチE��</span>
+                    <span id="synthetic-odds">0.0</span>倁E
                 </div>
             </div>
 
@@ -124,9 +124,9 @@
                 <a href="https://px.a8.net/svt/ejp?a8mat=4AXE4I+9OW19U+4TIO+5YJRM" rel="nofollow" target="_blank">
                     <div class="ad-content">
                         <span class="ad-badge">PR</span>
-                        <strong>ahamo（アハモ）</strong>
-                        <p>月2,970円(税込)で20GB使い放題！<br>
-                            海外ローミングも無料。競馬場での快適通信に！ 🐎💨</p>
+                        <strong>ahamo�E�アハモ�E�E/strong>
+                        <p>朁E,970冁E税込)で20GB使ぁE��題！Ebr>
+                            海外ローミングも無料。競馬場での快適通信に�E�E🐎💨</p>
                     </div>
                 </a>
                 <img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=4AXE4I+9OW19U+4TIO+5YJRM"
@@ -135,23 +135,23 @@
 
             <!-- Share Button -->
             <button id="share-btn" class="btn-share">
-                <span>✖</span> X(Twitter)で配分をシェア
+                <span>✁E/span> X(Twitter)で配�Eをシェア
             </button>
         </section>
 
         <!-- SEO Footer / Guide -->
         <footer class="app-footer">
             <div class="seo-content">
-                <h3>このアプリについて</h3>
+                <h3>こ�EアプリにつぁE��</h3>
                 <p>
-                    競馬の「ダッチング（Dutching）」計算を簡単に行える無料ツールです。
-                    複数の馬に賭ける際、どの馬が当たっても払い戻し金額が均等になるように資金配分を自動で計算します。
+                    競馬の「ダチE��ング�E�Eutching�E�」計算を簡単に行える無料ツールです、E
+                    褁E��の馬に賭ける際、どの馬が当たっても払ぁE��し��額が坁E��になるよぁE��賁E��配�Eを�E動で計算します、E
                 </p>
-                <h4>使い方</h4>
+                <h4>使ぁE��</h4>
                 <ol>
-                    <li>総予算を入力します。</li>
-                    <li>購入したい馬のオッズを入力します。</li>
-                    <li>自動的に最適な購入金額（100円単位）が計算されます。</li>
+                    <li>総予算を入力します、E/li>
+                    <li>購入したぁE��のオチE��を�E力します、E/li>
+                    <li>自動的に最適な購入金額！E00冁E��位）が計算されます、E/li>
                 </ol>
                 <p class="copyright">© 2026 Odds Calculator PWA</p>
             </div>
