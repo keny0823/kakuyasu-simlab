@@ -3,91 +3,299 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>格安SIMラボ | 格安SIM・ネット回線 比較サイト</title>
-  <meta name="description" content="格安SIMを料金・速度・サポートで徹底比較。あなたにぴったりの格安SIMが見つかります。">
+  <title>格安SIMラボ | 自分に合う格安SIMを比較しやすくするメディア</title>
+  <meta name="description" content="料金、回線、サポート条件を整理して、自分に合う格安SIMを比較しやすくするメディア">
   <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <a href="index.html" class="site-logo">🔬 格安SIM<span>ラボ</span></a>
-      <nav class="site-nav">
-        <a href="index.html">トップ</a>
-        <a href="output/ranking_overall.html">おすすめランキング</a>
-      </nav>
-    </div>
-  </header>
-  <main class="main-content">
-    <div class="container">
-      <div class="article-header">
-        <h1>🔬 格安SIMラボ<br>あなたにベストな格安SIMを見つけよう</h1>
-        <p class="article-meta">最終更新: <time>2026年02月18日</time></p>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="container nav-row">
+        <a href="index.html" class="site-logo">格安SIMラボ</a>
+        <nav class="site-nav">
+          <a href="output/ranking_overall.html">総合ランキング</a>
+          <a href="output/hikaku_table.html">比較表</a>
+          <a href="output/guide_kakuyasu.html">選び方ガイド</a>
+        </nav>
       </div>
-      <div class="article-body">
-        <p>当サイトでは、人気の格安SIM・モバイル通信サービスを<strong>料金・速度・サポート</strong>の観点から比較し、あなたに最適なプランをご提案します。</p>
-
-        <h2>📖 はじめての方へ</h2>
-        <ul>
-          <li><a href="output/guide_kakuyasu.html"><strong>格安SIMとは？</strong> 大手キャリアとの違い・メリット・デメリットを解説</a></li>
-          <li><a href="output/hikaku_table.html"><strong>格安SIM 全11社 比較表</strong> — 料金・容量・機能を一覧で比較</a></li>
-        </ul>
-
-        <h2>📊 ランキング記事</h2>
-        <ul>
-          <li><a href="output/ranking_overall.html">格安SIM おすすめランキング</a></li>
-          <li><a href="output/ranking_cheapest.html">とにかく安い格安SIM ランキング</a></li>
-          <li><a href="output/ranking_unlimited.html">データ無制限で使える格安SIM</a></li>
-          <li><a href="output/ranking_speed.html">通信速度が速い格安SIM ランキング</a></li>
-          <li><a href="output/ranking_family.html">家族で使うとお得な格安SIM ランキング</a></li>
-          <li><a href="output/ranking_support.html">店頭サポートがある格安SIM ランキング</a></li>
-        </ul>
-
-        <h2>📝 個別レビュー</h2>
-        <ul>
-          <li><a href="output/review_ahamo.html">ahamo 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_linemo.html">LINEMO 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_rakuten.html">楽天モバイル 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_uqmobile.html">UQモバイル 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_ymobile.html">ワイモバイル 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_povo.html">povo2.0 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_mineo.html">mineo 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_iijmio.html">IIJmio 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_irumo.html">irumo 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_nuro.html">NUROモバイル 評判・メリット・デメリット</a></li>
-          <li><a href="output/review_nihontsushin.html">日本通信SIM 評判・メリット・デメリット</a></li>
-        </ul>
-
-        <h2>⚔️ 比較記事</h2>
-        <ul>
-          <li><a href="output/compare_ahamo_vs_linemo.html">ahamo vs LINEMO</a></li>
-          <li><a href="output/compare_ahamo_vs_rakuten.html">ahamo vs 楽天モバイル</a></li>
-          <li><a href="output/compare_ahamo_vs_povo.html">ahamo vs povo2.0</a></li>
-          <li><a href="output/compare_ahamo_vs_irumo.html">ahamo vs irumo</a></li>
-          <li><a href="output/compare_linemo_vs_rakuten.html">LINEMO vs 楽天モバイル</a></li>
-          <li><a href="output/compare_linemo_vs_povo.html">LINEMO vs povo2.0</a></li>
-          <li><a href="output/compare_linemo_vs_nuro.html">LINEMO vs NUROモバイル</a></li>
-          <li><a href="output/compare_uqmobile_vs_ymobile.html">UQモバイル vs ワイモバイル</a></li>
-          <li><a href="output/compare_uqmobile_vs_ahamo.html">UQモバイル vs ahamo</a></li>
-          <li><a href="output/compare_iijmio_vs_mineo.html">IIJmio vs mineo</a></li>
-          <li><a href="output/compare_iijmio_vs_nuro.html">IIJmio vs NUROモバイル</a></li>
-          <li><a href="output/compare_iijmio_vs_linemo.html">IIJmio vs LINEMO</a></li>
-          <li><a href="output/compare_iijmio_vs_nihontsushin.html">IIJmio vs 日本通信SIM</a></li>
-          <li><a href="output/compare_mineo_vs_nuro.html">mineo vs NUROモバイル</a></li>
-          <li><a href="output/compare_mineo_vs_rakuten.html">mineo vs 楽天モバイル</a></li>
-          <li><a href="output/compare_rakuten_vs_povo.html">楽天モバイル vs povo2.0</a></li>
-          <li><a href="output/compare_rakuten_vs_ymobile.html">楽天モバイル vs ワイモバイル</a></li>
-          <li><a href="output/compare_nihontsushin_vs_irumo.html">日本通信SIM vs irumo</a></li>
-          <li><a href="output/compare_nihontsushin_vs_linemo.html">日本通信SIM vs LINEMO</a></li>
-          <li><a href="output/compare_nuro_vs_povo.html">NUROモバイル vs povo2.0</a></li>
-        </ul>
+    </header>
+    <div class="pr-disclosure">
+      <div class="container">
+        <strong>広告について</strong>
+        当サイトにはアフィリエイト広告が含まれます。リンク先の申込条件や価格情報は必ず公式サイトでご確認ください。
       </div>
     </div>
-  </main>
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2026 格安SIMラボ</p>
-      <p class="disclaimer">※ 当サイトはアフィリエイトプログラムに参加しています。</p>
+    <main class="page-main">
+      <div class="container">
+        <section class="hero-home hero-image-layout">
+          <div class="hero-copy">
+            <div class="eyebrow">SIM Comparison Media</div>
+            <h1>通信費を下げたい人へ。<br>比較の軸から、きれいに選べる。</h1>
+            <p>
+              格安SIM選びで迷いやすい「料金」「回線」「店頭サポート」「eSIM対応」を整理して、
+              自分に合うサービスを探しやすくした比較メディアです。
+            </p>
+            <div class="hero-chips">
+              <span>比較対象 11サービス</span>
+              <span>ランキング 6カテゴリ</span>
+              <span>広告リンクを含みます</span>
+            </div>
+            <div class="hero-actions">
+              <a class="primary-link" href="output/ranking_overall.html">総合ランキングを見る</a>
+              <a class="secondary-link" href="output/hikaku_table.html">比較表を見る</a>
+            </div>
+            <div class="hero-summary-grid">
+    <article class="summary-card">
+      <span class="summary-card-mark">🔵</span>
+      <div>
+        <strong>ahamo</strong>
+        <p>2,970円 / 月・20GB / 100GB</p>
+      </div>
+    </article>
+    
+    <article class="summary-card">
+      <span class="summary-card-mark">🔴</span>
+      <div>
+        <strong>楽天モバイル</strong>
+        <p>1,078円 / 月・3GB / 無制限系プランあり</p>
+      </div>
+    </article>
+    
+    <article class="summary-card">
+      <span class="summary-card-mark">🟢</span>
+      <div>
+        <strong>LINEMO</strong>
+        <p>990円 / 月・3GB / 20GB</p>
+      </div>
+    </article>
     </div>
-  </footer>
+          </div>
+          <div class="hero-visual hero-visual-stack">
+            <div class="visual-image-card">
+              <img src="static/images/hero-sim-network.svg" alt="格安SIM比較サイトのヒーロービジュアル">
+            </div>
+            <div class="visual-mini-grid">
+              <article class="visual-mini-card">
+                <img src="static/images/category-budget.svg" alt="料金比較のイメージ">
+                <div>
+                  <strong>料金の見やすさ</strong>
+                  <p>価格帯と容量を一目で比較</p>
+                </div>
+              </article>
+              <article class="visual-mini-card">
+                <img src="static/images/category-support.svg" alt="サポート比較のイメージ">
+                <div>
+                  <strong>サポート条件</strong>
+                  <p>店頭対応や契約導線も確認</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Decision Entry</div>
+              <h2>目的から入る</h2>
+            </div>
+          </div>
+          <div class="category-grid">
+        <a class="category-link" href="output/ranking_overall.html">
+          <span class="category-label">格安SIM おすすめ</span>
+          <strong>格安SIM おすすめランキング</strong>
+          <small>2026年最新の格安SIMを徹底比較。料金・速度・サポートの総合力でランキング。</small>
+        </a>
+        
+        <a class="category-link" href="output/ranking_cheapest.html">
+          <span class="category-label">格安SIM 安い</span>
+          <strong>とにかく安い格安SIM ランキング</strong>
+          <small>月額料金の安さだけにフォーカス。1円でも安くしたい人のためのランキング。</small>
+        </a>
+        
+        <a class="category-link" href="output/ranking_unlimited.html">
+          <span class="category-label">格安SIM データ無制限</span>
+          <strong>データ無制限で使える格安SIM</strong>
+          <small>ギガを気にせず使いたい人向け。無制限プランのある格安SIMを厳選。</small>
+        </a>
+        
+        <a class="category-link" href="output/ranking_speed.html">
+          <span class="category-label">格安SIM 速度 速い</span>
+          <strong>通信速度が速い格安SIM ランキング</strong>
+          <small>速度重視で選ぶならこれ！実測速度の評判が良い格安SIMを厳選。</small>
+        </a>
+        
+        <a class="category-link" href="output/ranking_family.html">
+          <span class="category-label">格安SIM 家族</span>
+          <strong>家族で使うとお得な格安SIM ランキング</strong>
+          <small>家族割やデータシェアが充実。家族みんなで乗り換えるならこの格安SIM。</small>
+        </a>
+        
+        <a class="category-link" href="output/ranking_support.html">
+          <span class="category-label">格安SIM 店舗 サポート</span>
+          <strong>店頭サポートがある格安SIM ランキング</strong>
+          <small>対面で相談できる安心感。店舗サポートが充実している格安SIMを紹介。</small>
+        </a>
+        </div>
+        </section>
+
+        <section class="section-block feature-band">
+          <article class="feature-band-card">
+            <div class="eyebrow">Top Picks</div>
+            <h2>注目の3サービス</h2>
+            <div class="card-grid">
+              
+    <article class="plan-card compact">
+      <div class="plan-card-top">
+        <div class="plan-card-brand">
+          <span class="carrier-mark">🔵</span>
+          <div>
+            <h3>ahamo</h3>
+            <p class="carrier-meta">ドコモ 4G/5G</p>
+          </div>
+        </div>
+        <div class="price-box">
+          <strong>2,970円</strong>
+          <span>20GB / 100GB</span>
+        </div>
+      </div>
+      <div class="plan-badges"><span>月額 2,970円</span><span>回線 ドコモ</span><span>オンライン中心</span></div>
+      <p class="plan-audience">向いている人: 通信品質を重視しつつ、料金も抑えたい人</p>
+      <ul class="feature-list"><li>ドコモ回線で安心の通信品質</li><li>5分以内の国内通話無料</li><li>海外82カ国で追加料金なし</li></ul>
+      <div class="plan-card-actions">
+        <a class="text-link" href="output/review_ahamo.html">詳細レビュー</a>
+        
+    <a class="cta-button" href="https://px.a8.net/svt/ejp?a8mat=4AXE4I+9OW19U+4TIO+5YJRM" rel="nofollow sponsored noopener" target="_blank">
+      <span>ahamoの公式情報を見る</span>
+      <small>広告リンクを含みます</small>
+    </a>
+    
+      </div>
+    </article>
+    
+    <article class="plan-card compact">
+      <div class="plan-card-top">
+        <div class="plan-card-brand">
+          <span class="carrier-mark">🔴</span>
+          <div>
+            <h3>楽天モバイル</h3>
+            <p class="carrier-meta">楽天 4G/5G + au 4G</p>
+          </div>
+        </div>
+        <div class="price-box">
+          <strong>1,078円</strong>
+          <span>3GB / 無制限系プランあり</span>
+        </div>
+      </div>
+      <div class="plan-badges"><span>月額 1,078円</span><span>回線 楽天</span><span>オンライン中心</span></div>
+      <p class="plan-audience">向いている人: データをたくさん使う人、楽天経済圏の人</p>
+      <ul class="feature-list"><li>データ無制限で3,278円は低価格帯</li><li>Rakuten Linkで通話追加通話料を抑えやすい</li><li>楽天ポイントが貯まる・使える</li></ul>
+      <div class="plan-card-actions">
+        <a class="text-link" href="output/review_rakuten.html">詳細レビュー</a>
+        
+    <a class="cta-button" href="https://mobile.rakuten.co.jp/" rel="nofollow sponsored noopener" target="_blank">
+      <span>楽天モバイルの公式情報を見る</span>
+      <small>広告リンクを含みます</small>
+    </a>
+    
+      </div>
+    </article>
+    
+    <article class="plan-card compact">
+      <div class="plan-card-top">
+        <div class="plan-card-brand">
+          <span class="carrier-mark">🟢</span>
+          <div>
+            <h3>LINEMO</h3>
+            <p class="carrier-meta">ソフトバンク 4G/5G</p>
+          </div>
+        </div>
+        <div class="price-box">
+          <strong>990円</strong>
+          <span>3GB / 20GB</span>
+        </div>
+      </div>
+      <div class="plan-badges"><span>月額 990円</span><span>回線 ソフトバンク</span><span>オンライン中心</span></div>
+      <p class="plan-audience">向いている人: LINEを多用する人、とにかく安さを重視する人</p>
+      <ul class="feature-list"><li>LINEギガフリー（LINEのデータ消費ゼロ）</li><li>ミニプラン990円は低価格帯</li><li>ソフトバンク回線で高品質</li></ul>
+      <div class="plan-card-actions">
+        <a class="text-link" href="output/review_linemo.html">詳細レビュー</a>
+        
+    <a class="cta-button" href="https://www.linemo.jp/" rel="nofollow sponsored noopener" target="_blank">
+      <span>LINEMOの公式情報を見る</span>
+      <small>広告リンクを含みます</small>
+    </a>
+    
+      </div>
+    </article>
+    
+            </div>
+          </article>
+        </section>
+
+        <section class="section-block editorial-grid">
+          <article class="content-card">
+            <div class="eyebrow">What We Compare</div>
+            <h2>見る軸を絞るだけで、選びやすくなる</h2>
+            <ul class="bullet-list">
+              <li>月額料金と初期費用</li>
+              <li>回線の種類と使い方の相性</li>
+              <li>店頭サポートの有無</li>
+              <li>eSIM対応と開通しやすさ</li>
+            </ul>
+          </article>
+          <article class="content-card dark-card">
+            <div class="eyebrow">Design Note</div>
+            <h2>Nanobanana2画像を差し込みやすい構造</h2>
+            <p>
+              ヒーロー、カテゴリカード、レビュー導線の画像枠を分離しているので、
+              後から高品質ビジュアルを差し込んでも全体のデザインが崩れにくい構成です。
+            </p>
+          </article>
+        </section>
+
+        
+    <section class="methodology-card">
+      <div class="eyebrow">Editorial Policy</div>
+      <h2>比較の前提を先に確認する</h2>
+      <p>
+        当サイトでは、月額料金、回線の種類、店頭サポート、eSIM対応、データ容量の見やすさを中心に整理しています。
+        特定サービスが常に優れていることを保証するものではなく、用途との相性を見つけやすくするための比較ガイドです。
+      </p>
+      <ul class="bullet-list">
+        <li>料金は代表的な公開プランを基準に整理</li>
+        <li>キャンペーン価格や限定特典は必ず公式ページで再確認</li>
+        <li>通信品質やサポートは回線種別と提供形態の特徴を中心に記載</li>
+      </ul>
+    </section>
+    
+
+        <section class="section-block">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">All Reviews</div>
+              <h2>個別レビュー一覧</h2>
+            </div>
+          </div>
+          <article class="content-card">
+            <ul class="link-list"><li><a href="output/review_ahamo.html">ahamoのレビューを見る</a></li><li><a href="output/review_linemo.html">LINEMOのレビューを見る</a></li><li><a href="output/review_rakuten.html">楽天モバイルのレビューを見る</a></li><li><a href="output/review_uqmobile.html">UQモバイルのレビューを見る</a></li><li><a href="output/review_ymobile.html">ワイモバイルのレビューを見る</a></li><li><a href="output/review_povo.html">povo2.0のレビューを見る</a></li><li><a href="output/review_mineo.html">mineoのレビューを見る</a></li><li><a href="output/review_iijmio.html">IIJmioのレビューを見る</a></li><li><a href="output/review_irumo.html">irumoのレビューを見る</a></li><li><a href="output/review_nuro.html">NUROモバイルのレビューを見る</a></li><li><a href="output/review_nihontsushin.html">日本通信SIMのレビューを見る</a></li></ul>
+          </article>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <p class="footer-title">格安SIMラボ</p>
+          <p>料金、回線、サポート条件を整理して、自分に合う格安SIMを比較しやすくするメディア</p>
+        </div>
+        <div>
+          <p>各サービスの料金、キャンペーン、注意事項は変更される場合があります。</p>
+          <p>申込前に必ず公式サイトの最新情報をご確認ください。</p>
+        </div>
+      </div>
+      <div class="container footer-copy">© 2026 格安SIMラボ</div>
+    </footer>
+  </div>
 </body>
 </html>
