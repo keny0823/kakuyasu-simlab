@@ -1,0 +1,43 @@
+{
+  "site": "sim-affiliate",
+  "generator": "Nanobanana2",
+  "profile_config": "../buzz-channel/config.json",
+  "assets": [
+    {
+      "id": "hero_main",
+      "target_path": "static/images/hero-sim-network.png",
+      "fallback_path": "static/images/hero-sim-network.svg",
+      "size": "1536x1024",
+      "use_case": "ui-mockup",
+      "asset_type": "website hero image",
+      "prompt": "格安SIM比較サイトのヒーロー画像。日本のスマホ料金見直しをテーマにした横長ビジュアル。ノートPCまたはタブレットの比較ダッシュボードが表示され、画面内に『料金』『回線』『サポート』の3要素が日本語で分かりやすく見える。抽象アートではなく、比較サイトだと一目で分かる実用的なビジュアル。清潔感のある白とブルー基調。日本の比較メディア向けの高品質UIモック。人物は不要。テキストは最小限で読みやすい日本語。広告っぽすぎず信頼感重視。"
+    },
+    {
+      "id": "budget_card",
+      "target_path": "static/images/category-budget.png",
+      "fallback_path": "static/images/category-budget.svg",
+      "size": "1024x768",
+      "use_case": "ui-mockup",
+      "asset_type": "category support image",
+      "prompt": "格安SIMの料金比較を表す横長画像。スマホ料金表、月額料金、データ容量の比較カードが並ぶ日本語UIモック。『月額料金』『データ容量』が自然に見える。白背景にブルーアクセント、比較サイトのカードデザイン、高品質、すっきり、信頼感。人物不要。"
+    },
+    {
+      "id": "support_card",
+      "target_path": "static/images/category-support.png",
+      "fallback_path": "static/images/category-support.svg",
+      "size": "1024x768",
+      "use_case": "ui-mockup",
+      "asset_type": "category support image",
+      "prompt": "格安SIMのサポート比較を表す横長画像。店舗サポート、オンライン手続き、チャット相談を比較している日本語UIモック。『店頭サポート』『オンライン手続き』が読みやすく見える。比較サイト向け、高品質、清潔感、白とネイビーとシアン基調。人物不要。"
+    },
+    {
+      "id": "checklist_card",
+      "target_path": "static/images/category-checklist.png",
+      "fallback_path": "static/images/category-checklist.svg",
+      "size": "1024x768",
+      "use_case": "infographic-diagram",
+      "asset_type": "checklist image",
+      "prompt": "格安SIM申し込み前の確認ポイントを示す横長インフォグラフィック。3つのチェック項目が日本語で分かりやすく表示される。項目は『キャンペーン条件』『通話オプション込みの総額』『開通方法とサポート窓口』。比較サイトに自然に馴染む、白とブルーを基調にした高品質インフォグラフィック。人物不要。"
+    }
+  ]
+}

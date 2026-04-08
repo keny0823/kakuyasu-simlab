@@ -10,6 +10,7 @@ Checks:
 
 from __future__ import annotations
 
+import json
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -29,6 +30,8 @@ BANNED_PHRASES = [
     "圧倒的に安い",
     "本当におすすめできる",
 ]
+
+IMAGE_MANIFEST_FILE = BASE_DIR / "nanobanana_manifest.json"
 
 
 class LinkParser(HTMLParser):
@@ -99,12 +102,36 @@ def find_broken_links(files: list[Path]) -> list[str]:
     return issues
 
 
+def find_nanobanana_asset_issues() -> list[str]:
+    if not IMAGE_MANIFEST_FILE.exists():
+        return []
+
+    manifest = json.loads(IMAGE_MANIFEST_FILE.read_text(encoding="utf-8"))
+    issues: list[str] = []
+    for asset in manifest.get("assets", []):
+        target = BASE_DIR / asset["target_path"]
+        if target.exists():
+            meta = target.with_suffix(target.suffix + ".json")
+            if not meta.exists():
+                issues.append(f"{asset['target_path']}: 画像メタデータがありません")
+            continue
+
+        fallback = BASE_DIR / asset.get("fallback_path", "")
+        if fallback.exists():
+            issues.append(f"{asset['target_path']}: Nanobanana2画像未生成のためフォールバック使用中")
+        else:
+            issues.append(f"{asset['target_path']}: 必須画像がありません")
+    return issues
+
+
 def main() -> int:
     files = generated_html_files()
     issues = []
     issues.extend(find_phrase_issues(files))
     issues.extend(find_disclosure_issues(files))
     issues.extend(find_broken_links(files))
+    if "--strict-images" in sys.argv:
+        issues.extend(find_nanobanana_asset_issues())
 
     if issues:
         print("QUALITY CHECK FAILED")
