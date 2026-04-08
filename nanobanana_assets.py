@@ -25,6 +25,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 DEFAULT_MANIFEST = BASE_DIR / "nanobanana_manifest.json"
+LOG_DIR = BASE_DIR / "nanobanana_logs"
 
 
 def load_manifest(path: Path) -> dict:
@@ -35,6 +36,11 @@ def prompt_dir() -> Path:
     path = BASE_DIR / "nanobanana_prompts"
     path.mkdir(exist_ok=True)
     return path
+
+
+def log_dir() -> Path:
+    LOG_DIR.mkdir(exist_ok=True)
+    return LOG_DIR
 
 
 def default_download_dir() -> Path:
@@ -184,6 +190,140 @@ def list_assets(manifest: dict) -> int:
     return 0
 
 
+def save_debug_screenshot(page, name: str) -> None:
+    try:
+        path = log_dir() / f"{name}.png"
+        page.screenshot(path=str(path), full_page=True)
+        print(f"SCREENSHOT_SAVED {path}")
+    except Exception:
+        pass
+
+
+def click_first_visible(page, selectors: list[str], timeout_ms: int = 1200) -> bool:
+    for sel in selectors:
+        try:
+            locator = page.locator(sel).first
+            if locator.is_visible(timeout=timeout_ms):
+                locator.click()
+                return True
+        except Exception:
+            continue
+    return False
+
+
+def fill_prompt_box(page, prompt: str, selectors: list[str]) -> bool:
+    for sel in selectors:
+        try:
+            box = page.locator(sel).first
+            if box.is_visible(timeout=3000):
+                box.click()
+                page.keyboard.press("Control+A")
+                page.keyboard.type(prompt)
+                return True
+        except Exception:
+            continue
+    return False
+
+
+def wait_for_generation_phase(page, timeout_sec: int) -> bool:
+    start = time.time()
+    generating_indicators = [
+        'text=Generating',
+        'text=作成中',
+        'text=生成中',
+        'text=Creating',
+    ]
+    ready_indicators = [
+        'button:has-text("Download")',
+        'button:has-text("ダウンロード")',
+        'button[aria-label*="Download"]',
+        'button[aria-label*="ダウンロード"]',
+        'img',
+    ]
+
+    saw_generation = False
+    while time.time() - start < timeout_sec:
+        try:
+            for sel in generating_indicators:
+                loc = page.locator(sel).first
+                if loc.is_visible(timeout=300):
+                    saw_generation = True
+                    break
+        except Exception:
+            pass
+
+        for sel in ready_indicators:
+            try:
+                loc = page.locator(sel).first
+                if loc.is_visible(timeout=300):
+                    return True
+            except Exception:
+                continue
+
+        page.wait_for_timeout(1000)
+
+    return saw_generation
+
+
+def attempt_download(page, download_dir: Path, started_at: float, seen: set[str], timeout_sec: int) -> Path | None:
+    download_buttons = [
+        'button:has-text("ダウンロード")',
+        'button:has-text("Download")',
+        'button[aria-label*="ダウンロード"]',
+        'button[aria-label*="Download"]',
+        '[role="menuitem"]:has-text("ダウンロード")',
+        '[role="menuitem"]:has-text("Download")',
+    ]
+    overflow_buttons = [
+        'button[aria-label*="その他"]',
+        'button[aria-label*="More"]',
+        'button[aria-label*="メニュー"]',
+        'button:has-text("︙")',
+        'button:has-text("⋮")',
+    ]
+    image_targets = [
+        'img',
+        '[data-test-id*="image"]',
+        '[data-testid*="image"]',
+    ]
+
+    deadline = time.time() + timeout_sec
+    opened_menu = False
+    while time.time() < deadline:
+        found = find_recent_download(download_dir, started_at, seen)
+        if found:
+            return found
+
+        if click_first_visible(page, download_buttons, timeout_ms=500):
+            page.wait_for_timeout(1500)
+            found = find_recent_download(download_dir, started_at, seen)
+            if found:
+                return found
+
+        if not opened_menu and click_first_visible(page, overflow_buttons, timeout_ms=500):
+            opened_menu = True
+            page.wait_for_timeout(800)
+            if click_first_visible(page, download_buttons, timeout_ms=500):
+                page.wait_for_timeout(1500)
+                found = find_recent_download(download_dir, started_at, seen)
+                if found:
+                    return found
+
+        for sel in image_targets:
+            try:
+                loc = page.locator(sel).first
+                if loc.is_visible(timeout=300):
+                    loc.click()
+                    page.wait_for_timeout(700)
+                    break
+            except Exception:
+                continue
+
+        page.wait_for_timeout(1200)
+
+    return None
+
+
 def open_gemini_for_asset(manifest: dict, asset_id: str) -> int:
     assets = asset_map(manifest)
     if asset_id not in assets:
@@ -313,6 +453,14 @@ def run_asset_pipeline(
         'button:has-text("Nano Banana")',
         'button:has-text("Imagen")',
     ]
+    submit_buttons = [
+        'button[aria-label*="送信"]',
+        'button[aria-label*="Send"]',
+        'button:has-text("送信")',
+        'button:has-text("Generate")',
+        'button:has-text("生成")',
+        'button:has-text("Create")',
+    ]
 
     print(f"NANOBANANA_RUN_START asset={asset_id}")
     print(f"DOWNLOAD_DIR {download_dir}")
@@ -332,49 +480,47 @@ def run_asset_pipeline(
             page.goto("https://gemini.google.com/app")
             page.wait_for_load_state("domcontentloaded")
             time.sleep(4)
+            save_debug_screenshot(page, f"{asset_id}_gemini_open")
 
-            for sel in mode_buttons:
-                try:
-                    button = page.locator(sel).first
-                    if button.is_visible(timeout=1000):
-                        button.click()
-                        time.sleep(1)
-                        break
-                except Exception:
-                    pass
+            click_first_visible(page, mode_buttons)
+            time.sleep(1)
+            save_debug_screenshot(page, f"{asset_id}_mode_selected")
 
-            inserted = False
-            for sel in selectors:
-                try:
-                    box = page.locator(sel).first
-                    if box.is_visible(timeout=3000):
-                        box.click()
-                        page.keyboard.press("Control+A")
-                        page.keyboard.type(prompt)
-                        inserted = True
-                        break
-                except Exception:
-                    pass
+            inserted = fill_prompt_box(page, prompt, selectors)
 
             if not inserted:
                 print("PROMPT_INSERT_FAILED")
+                save_debug_screenshot(page, f"{asset_id}_prompt_failed")
                 return 1
 
             print("GEMINI_READY")
             print(f"Prompt inserted for asset: {asset_id}")
-            print("Generate and download the image in Gemini.")
-            print("This runner will watch your Downloads folder and auto-register the first new image.")
+            save_debug_screenshot(page, f"{asset_id}_prompt_inserted")
 
-            deadline = time.time() + timeout_sec
-            found: Path | None = None
-            while time.time() < deadline:
-                page.wait_for_timeout(1000)
-                found = find_recent_download(download_dir, started_at, seen)
-                if found:
-                    print(f"DOWNLOAD_DETECTED {found}")
-                    return register_generated_asset(manifest, asset_id, found)
+            auto_sent = click_first_visible(page, submit_buttons, timeout_ms=1200)
+            if auto_sent:
+                print("AUTO_GENERATE_TRIGGERED")
+            else:
+                print("AUTO_GENERATE_NOT_FOUND")
+                print("Please generate once manually; the runner will still auto-download when possible.")
+
+            generation_ready = wait_for_generation_phase(page, timeout_sec=min(timeout_sec, 240))
+            if generation_ready:
+                save_debug_screenshot(page, f"{asset_id}_generation_ready")
+
+            found = attempt_download(
+                page,
+                download_dir,
+                started_at,
+                seen,
+                timeout_sec=max(60, timeout_sec - min(timeout_sec, 240)),
+            )
+            if found:
+                print(f"DOWNLOAD_DETECTED {found}")
+                return register_generated_asset(manifest, asset_id, found)
 
             print("DOWNLOAD_WAIT_TIMEOUT")
+            save_debug_screenshot(page, f"{asset_id}_download_timeout")
             print(
                 f'Run manually after download: python sim-affiliate\\nanobanana_assets.py register {asset_id} "DOWNLOADED_FILE_PATH"'
             )
