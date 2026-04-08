@@ -255,10 +255,91 @@ def plan_card(plan: dict, compact: bool = False, detail_root: str = "") -> str:
     """
 
 
+def quick_link_card(title: str, desc: str, href: str, tag: str) -> str:
+    return f"""
+    <a class="quick-link-card" href="{html.escape(href, quote=True)}">
+      <span class="quick-link-tag">{esc(tag)}</span>
+      <strong>{esc(title)}</strong>
+      <p>{esc(desc)}</p>
+    </a>
+    """
+
+
+def spotlight_card(plan: dict, note: str, detail_root: str = "output/") -> str:
+    checks = [
+        f"月額 {yen(plan['monthly_price'])}",
+        "eSIM対応" if plan["esim"] else "eSIM要確認",
+        "店頭あり" if has_store_support(plan) else "オンライン中心",
+    ]
+    check_html = "".join(f"<li>{esc(item)}</li>" for item in checks)
+    return f"""
+    <article class="spotlight-card">
+      <div class="spotlight-head">
+        <div class="plan-card-brand">
+          <span class="carrier-mark">{html.escape(plan['logo_emoji'])}</span>
+          <div>
+            <h3>{esc(plan['carrier'])}</h3>
+            <p class="carrier-meta">{esc(plan['network'])}</p>
+          </div>
+        </div>
+        <span class="spotlight-price">{esc(plan_capacity_label(plan))}</span>
+      </div>
+      <p class="spotlight-note">{esc(note)}</p>
+      <ul class="spotlight-checks">{check_html}</ul>
+      <div class="plan-card-actions">
+        <a class="text-link" href="{html.escape(detail_root, quote=True)}review_{html.escape(plan['id'])}.html">詳細レビュー</a>
+        {cta_button(plan, f"{plan['carrier']}の公式情報を見る")}
+      </div>
+    </article>
+    """
+
+
+def compare_snapshot_table(plans: list[dict]) -> str:
+    rows = []
+    for plan in plans:
+        rows.append(
+            f"""
+            <tr>
+              <td>{esc(plan['carrier'])}</td>
+              <td>{esc(yen(plan['monthly_price']))}</td>
+              <td>{esc(plan_capacity_label(plan))}</td>
+              <td>{'対応' if plan['esim'] else '要確認'}</td>
+              <td>{'あり' if has_store_support(plan) else '限定的'}</td>
+              <td>{esc(best_for(plan))}</td>
+            </tr>
+            """
+        )
+    return f"""
+    <div class="table-wrap">
+      <table class="compare-table compact-table">
+        <tr>
+          <th>サービス</th>
+          <th>月額目安</th>
+          <th>容量</th>
+          <th>eSIM</th>
+          <th>店頭</th>
+          <th>向いている人</th>
+        </tr>
+        {''.join(rows)}
+      </table>
+    </div>
+    """
+
+
 def generate_index(data: dict) -> str:
     top_ids = data["ranking_articles"][0]["ranking_order"][:3]
     top_plans = [get_plan(data, plan_id) for plan_id in top_ids]
     top_plans = [plan for plan in top_plans if plan]
+    spotlight_uq = get_plan(data, "uqmobile")
+    spotlight_povo = get_plan(data, "povo")
+    quick_links = "".join(
+        [
+            quick_link_card("とにかく料金を抑えたい", "まずは月額の低価格帯から比較する", "output/ranking_cheapest.html", "安さ重視"),
+            quick_link_card("速度や回線品質を重視したい", "混雑時間帯の使いやすさを優先して見る", "output/ranking_speed.html", "速度重視"),
+            quick_link_card("家族やセット割で選びたい", "家族利用や割引前提で比較する", "output/ranking_family.html", "家族向け"),
+            quick_link_card("店頭サポートもほしい", "オンライン完結が不安な人向けに見る", "output/ranking_support.html", "サポート"),
+        ]
+    )
     ranking_cards = "".join(
         f"""
         <a class="category-link" href="output/ranking_{html.escape(item['id'])}.html">
@@ -274,6 +355,9 @@ def generate_index(data: dict) -> str:
         for plan in data["sim_plans"]
     )
     summary_cards = "".join(hero_summary_card(plan) for plan in top_plans)
+    snapshot_ids = ["ahamo", "povo", "uqmobile", "linemo", "rakuten", "iijmio"]
+    snapshot_plans = [get_plan(data, plan_id) for plan_id in snapshot_ids]
+    snapshot_plans = [plan for plan in snapshot_plans if plan]
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -348,6 +432,31 @@ def generate_index(data: dict) -> str:
         <section class="section-block">
           <div class="section-head">
             <div>
+              <div class="eyebrow">Quick Start</div>
+              <h2>まずは近い悩みから見る</h2>
+            </div>
+          </div>
+          <div class="quick-link-grid">{quick_links}</div>
+        </section>
+
+        <section class="section-block spotlight-band">
+          <article class="feature-band-card">
+            <div class="section-head">
+              <div>
+                <div class="eyebrow">Good First Check</div>
+                <h2>迷ったら、まずこの2タイプを見比べる</h2>
+              </div>
+            </div>
+            <div class="spotlight-grid">
+              {spotlight_card(spotlight_uq, "店頭サポートや回線の安心感を優先したい人向け") if spotlight_uq else ''}
+              {spotlight_card(spotlight_povo, "月によって使用量が変わる人やサブ回線を持ちたい人向け") if spotlight_povo else ''}
+            </div>
+          </article>
+        </section>
+
+        <section class="section-block">
+          <div class="section-head">
+            <div>
               <div class="eyebrow">Decision Entry</div>
               <h2>目的から入る</h2>
             </div>
@@ -361,6 +470,28 @@ def generate_index(data: dict) -> str:
             <h2>注目の3サービス</h2>
             <div class="card-grid">
               {''.join(plan_card(plan, compact=True, detail_root='output/') for plan in top_plans)}
+            </div>
+          </article>
+        </section>
+
+        <section class="section-block editorial-grid">
+          <article class="content-card">
+            <div class="eyebrow">Snapshot Table</div>
+            <h2>主要サービスを一目で比較する</h2>
+            <p>細かいレビューに入る前に、主要サービスだけ横並びで把握したい人向けの早見表です。</p>
+            {compare_snapshot_table(snapshot_plans)}
+          </article>
+          <article class="content-card accent-card">
+            <div class="eyebrow">How To Choose</div>
+            <h2>失敗しにくい選び方は3ステップ</h2>
+            <ol class="step-list">
+              <li>最初に「安さ」「速度」「サポート」のどれを優先するか決める</li>
+              <li>月額料金だけでなく、容量と通話オプション込みの総額を見る</li>
+              <li>迷ったら今使っている回線に近いサービスから比較する</li>
+            </ol>
+            <div class="advisor-note">
+              <strong>編集メモ</strong>
+              <p>家族割や光セット割を使う予定がないなら、オンライン中心のプランも候補に入れると選びやすくなります。</p>
             </div>
           </article>
         </section>
