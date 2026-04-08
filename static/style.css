@@ -452,6 +452,18 @@ h1, h2, h3 {
   color: inherit;
 }
 
+.dark-card .bullet-list li {
+  color: rgba(238, 244, 255, 0.92);
+}
+
+.editorial-visual {
+  width: 100%;
+  margin: 16px 0 18px;
+  border-radius: 18px;
+  display: block;
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .accent-card {
   background:
     radial-gradient(circle at top right, rgba(31, 105, 255, 0.14), transparent 28%),

@@ -27,6 +27,7 @@ SITE_DESCRIPTION = "料金、回線、サポート条件を整理して、自分
 HERO_IMAGE = "static/images/hero-sim-network.svg"
 BUDGET_IMAGE = "static/images/category-budget.svg"
 SUPPORT_IMAGE = "static/images/category-support.svg"
+CHECKLIST_IMAGE = "static/images/category-checklist.svg"
 
 
 def load_data() -> dict:
@@ -376,12 +377,14 @@ def generate_index(data: dict) -> str:
             </ul>
           </article>
           <article class="content-card dark-card">
-            <div class="eyebrow">Design Note</div>
-            <h2>Nanobanana2画像を差し込みやすい構造</h2>
-            <p>
-              ヒーロー、カテゴリカード、レビュー導線の画像枠を分離しているので、
-              後から高品質ビジュアルを差し込んでも全体のデザインが崩れにくい構成です。
-            </p>
+            <div class="eyebrow">Before Apply</div>
+            <h2>申し込み前に確認したい3つのポイント</h2>
+            <img src="{CHECKLIST_IMAGE}" alt="格安SIM申込前の確認ポイント" class="editorial-visual">
+            <ul class="bullet-list">
+              <li>キャンペーンの対象条件と終了時期</li>
+              <li>通話オプション込みの総額</li>
+              <li>開通方法とサポート窓口の使いやすさ</li>
+            </ul>
           </article>
         </section>
 
