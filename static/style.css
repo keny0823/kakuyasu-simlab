@@ -979,6 +979,14 @@ h1, h2, h3 {
     width: min(100vw - 20px, 100%);
   }
 
+  .site-header {
+    position: static;
+  }
+
+  .site-logo {
+    font-size: 1.16rem;
+  }
+
   .hero-home,
   .page-hero,
   .feature-band-card,
@@ -992,18 +1000,108 @@ h1, h2, h3 {
 
   .nav-row {
     min-height: 0;
-    align-items: start;
-    padding: 12px 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 0 10px;
+  }
+
+  .site-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 8px;
+    padding-bottom: 2px;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav a {
+    flex: 0 0 auto;
+    font-size: 0.84rem;
+    padding: 9px 12px;
+  }
+
+  .pr-disclosure {
+    padding: 8px 0;
+    font-size: 0.79rem;
+    line-height: 1.55;
+  }
+
+  .page-main {
+    padding: 14px 0 56px;
+  }
+
+  .hero-home {
+    gap: 14px;
+  }
+
+  .eyebrow {
+    padding: 6px 10px;
+    font-size: 0.7rem;
   }
 
   .hero-home h1,
   .page-hero h1 {
-    font-size: 1.48rem;
+    font-size: 1.4rem;
+    line-height: 1.38;
     max-width: none;
+  }
+
+  .hero-copy > p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .hero-chips {
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .hero-chips span,
+  .plan-badges span {
+    padding: 7px 10px;
+    font-size: 0.78rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    margin-top: 16px;
+  }
+
+  .primary-link,
+  .secondary-link {
+    width: 100%;
+    text-align: center;
+    padding: 14px 16px;
+  }
+
+  .visual-image-card {
+    padding: 10px;
+  }
+
+  .visual-image-card img,
+  .editorial-visual {
+    border-radius: 14px;
   }
 
   .hero-offer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-offer-card {
+    padding: 14px;
+  }
+
+  .hero-offer-head strong {
+    font-size: 0.94rem;
+  }
+
+  .hero-offer-head p {
+    font-size: 0.84rem;
+    line-height: 1.55;
   }
 
   .hero-summary-grid,
@@ -1022,5 +1120,89 @@ h1, h2, h3 {
   .price-box {
     min-width: 0;
     text-align: left;
+  }
+
+  .section-block {
+    margin-top: 20px;
+  }
+
+  .section-head {
+    align-items: start;
+    margin-bottom: 12px;
+  }
+
+  .section-head h2,
+  .content-card h2,
+  .methodology-card h2 {
+    font-size: 1.28rem;
+    line-height: 1.4;
+  }
+
+  .section-lead,
+  .spotlight-note,
+  .category-link small,
+  .plan-audience,
+  .checklist-note,
+  .advisor-note p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .quick-link-card,
+  .spotlight-card,
+  .category-link,
+  .plan-card {
+    padding: 16px;
+  }
+
+  .quick-link-card strong,
+  .spotlight-card h3,
+  .category-link strong {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .category-link {
+    min-height: 0;
+    gap: 6px;
+  }
+
+  .feature-band-card .card-grid,
+  .feature-band-card .spotlight-grid {
+    margin-top: 14px;
+  }
+
+  .plan-card-actions {
+    align-items: stretch;
+  }
+
+  .text-link,
+  .cta-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .cta-button {
+    min-width: 0;
+    padding: 13px 14px;
+  }
+
+  .compare-table {
+    font-size: 0.84rem;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 11px 9px;
+  }
+
+  .footer-grid {
+    gap: 12px;
+  }
+
+  .footer-copy {
+    margin-top: 14px;
+    padding-top: 14px;
+    font-size: 0.84rem;
   }
 }
