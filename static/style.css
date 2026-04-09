@@ -243,9 +243,92 @@ h1, h2, h3 {
   font-size: 1rem;
 }
 
+.hero-copy {
+  text-align: center;
+}
+
+.hero-copy > p,
+.section-lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-chips,
+.hero-actions {
+  justify-content: center;
+}
+
+.section-head {
+  text-align: center;
+}
+
+.section-head > div {
+  width: 100%;
+}
+
+.feature-band-card > .eyebrow,
+.feature-band-card > h2,
+.feature-band-card > .section-lead,
+.content-card > .eyebrow,
+.content-card > h2,
+.methodology-card > .eyebrow,
+.methodology-card > h2 {
+  text-align: center;
+}
+
+.feature-band-card > .eyebrow,
+.content-card > .eyebrow,
+.methodology-card > .eyebrow {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quick-link-card,
+.category-link {
+  text-align: center;
+}
+
+.spotlight-card {
+  text-align: center;
+}
+
+.spotlight-head,
+.plan-card-top {
+  justify-content: center;
+}
+
+.plan-card-brand {
+  justify-content: center;
+}
+
+.plan-card.compact,
+.hero-offer-card {
+  text-align: center;
+}
+
+.hero-offer-head {
+  justify-content: center;
+}
+
+.hero-offer-meta,
+.plan-badges,
+.plan-card-actions {
+  justify-content: center;
+}
+
+.link-list {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.link-list li {
+  text-align: center;
+}
+
 .section-lead {
   max-width: 40rem;
-  margin: 10px 0 0;
+  margin: 10px auto 0;
   color: var(--text-soft);
 }
 
