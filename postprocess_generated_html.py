@@ -7,6 +7,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
 TARGETS = [BASE_DIR / "index.html", *sorted((BASE_DIR / "output").glob("*.html"))]
+GA_ID_FILE = BASE_DIR / "ga_measurement_id.txt"
 
 TEXT_REPLACEMENTS = {
     "Quick Start": "はじめに",
@@ -52,6 +53,39 @@ BRANDS = {
 }
 
 
+def load_ga_measurement_id() -> str:
+    if not GA_ID_FILE.exists():
+        return ""
+    measurement_id = GA_ID_FILE.read_text(encoding="utf-8").strip()
+    if not re.fullmatch(r"G-[A-Z0-9]+", measurement_id):
+        return ""
+    if "X" in measurement_id:
+        return ""
+    return measurement_id
+
+
+def build_ga_snippet(measurement_id: str, is_root: bool) -> str:
+    _ = is_root
+    return (
+        f'  <script async src="https://www.googletagmanager.com/gtag/js?id={measurement_id}"></script>\n'
+        "  <script>\n"
+        "    window.dataLayer = window.dataLayer || [];\n"
+        "    function gtag(){dataLayer.push(arguments);}\n"
+        "    gtag('js', new Date());\n"
+        f"    gtag('config', '{measurement_id}');\n"
+        "  </script>\n"
+    )
+
+
+def inject_ga_snippet(text: str, measurement_id: str, is_root: bool) -> str:
+    if not measurement_id:
+        return text
+    if "googletagmanager.com/gtag/js" in text or "gtag('config'" in text:
+        return text
+    snippet = build_ga_snippet(measurement_id, is_root)
+    return text.replace("</head>", f"{snippet}</head>")
+
+
 def apply_brand_marks(text: str) -> str:
     for carrier, (class_name, label) in BRANDS.items():
         text = re.sub(
@@ -68,6 +102,7 @@ def apply_brand_marks(text: str) -> str:
 
 
 def main() -> None:
+    ga_measurement_id = load_ga_measurement_id()
     for path in TARGETS:
         text = path.read_text(encoding="utf-8")
         text = text.replace(
@@ -82,6 +117,7 @@ def main() -> None:
         script_tag = '<script defer src="static/site.js"></script>' if path.name == "index.html" else '<script defer src="../static/site.js"></script>'
         if "site.js" not in text:
             text = text.replace("</head>", f'  {script_tag}\n</head>')
+        text = inject_ga_snippet(text, ga_measurement_id, path.name == "index.html")
         text = apply_brand_marks(text)
         path.write_text(text, encoding="utf-8")
 
