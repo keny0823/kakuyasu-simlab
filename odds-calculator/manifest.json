@@ -1,11 +1,11 @@
 {
-    "name": "競馬オッズ資金分配",
-    "short_name": "オッズ計算",
+    "name": "競馬 合成オッズ計算",
+    "short_name": "合成オッズ",
     "start_url": "./index.html",
     "display": "standalone",
-    "background_color": "#121212",
-    "theme_color": "#1a1a1a",
-    "description": "競馬のオッズに合わせて資金を自動分配する計算機アプリ",
+    "background_color": "#111111",
+    "theme_color": "#111111",
+    "description": "競馬の合成オッズと資金配分を計算し、青単条件の候補馬を判定します。",
     "icons": [
         {
             "src": "icons/icon-192.png",

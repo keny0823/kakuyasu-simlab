@@ -1,4 +1,4 @@
-const CACHE_NAME = 'odds-calc-v2';
+const CACHE_NAME = 'odds-calc-v3-blue-tan';
 const ASSETS = [
     './',
     './index.html',
@@ -14,6 +14,17 @@ self.addEventListener('install', (event) => {
         caches.open(CACHE_NAME)
             .then((cache) => cache.addAll(ASSETS))
     );
+    self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys()
+            .then((names) => Promise.all(
+                names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))
+            ))
+    );
+    self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {

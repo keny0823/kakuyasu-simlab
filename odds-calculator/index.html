@@ -4,97 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>オッズ資金分配計算機</title>
-    <meta name="description" content="競馬のオッズに合わせて資金を自動分配。どの馬がきても利益が出るように計算します。">
-    <!-- OGP / Social Meta Tags -->
-    <meta property="og:title" content="競馬オッズ資金分配計算機 | ダッチング自動計算アプリ">
-    <meta property="og:description" content="総予算とオッズを入力するだけで、どの馬が勝っても利益が出るように資金配分を自動計算。スマートフォン対応、インストール不要の無料PWAアプリ。">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://keny0823.github.io/kakuyasu-simlab/odds-calculator/index.html">
-    <meta property="og:image" content="https://keny0823.github.io/kakuyasu-simlab/odds-calculator/icons/icon-512.png">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="競馬オッズ資金分配アプリ">
-    <meta name="twitter:description" content="オッズに合わせて資金を最適配分解。利益確定・損切りラインも一目でわかる！">
-
-    <link rel="stylesheet" href="style.css?v=2.1">
+    <title>競馬 合成オッズ計算</title>
+    <meta name="description" content="競馬の合成オッズと資金配分を計算し、青単条件の候補馬を判定します。">
+    <link rel="stylesheet" href="style.css?v=3.0">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <meta name="theme-color" content="#1a1a1a">
-    <style>
-        /* Loading overlay */
-        #loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.3s;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #333;
-            border-top-color: #00d26a;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
+    <meta name="theme-color" content="#111111">
 </head>
 
 <body>
-    <div id="loading">
-        <div class="spinner"></div>
-    </div>
-
     <header class="app-header">
-        <h1>🐴 オッズ資金分配</h1>
-        <button id="reset-btn" aria-label="リセット">🗑️</button>
+        <h1>競馬 合成オッズ</h1>
+        <button id="reset-btn" aria-label="リセット" title="リセット">↺</button>
     </header>
 
     <main class="app-container">
-        <!-- 予算入力 -->
         <section class="card budget-card">
             <label for="total-budget">総予算</label>
             <div class="input-group large">
                 <span class="currency">¥</span>
-                <input type="number" id="total-budget" value="10000" inputmode="numeric" placeholder="金額を入力">
+                <input type="number" id="total-budget" value="10000" inputmode="numeric" min="0">
             </div>
         </section>
 
-        <!-- オッズ入力リスト -->
+        <section class="card blue-tan-card">
+            <div class="card-header">
+                <h2>青単チェック</h2>
+                <span id="blue-tan-status" class="blue-tan-status neutral">判定待ち</span>
+            </div>
+
+            <div class="blue-tan-controls">
+                <label>
+                    <span>1番人気オッズ</span>
+                    <input type="number" id="blue-tan-favorite-odds" value="2.5" step="0.1" inputmode="decimal">
+                </label>
+                <label>
+                    <span>期待回収率</span>
+                    <input type="number" id="blue-tan-min-roi" value="150" step="1" inputmode="numeric">
+                </label>
+                <label>
+                    <span>指数欄数</span>
+                    <input type="number" id="blue-tan-min-index" value="2" min="0" max="4" inputmode="numeric">
+                </label>
+            </div>
+
+            <div class="blue-tan-result">
+                <strong id="blue-tan-pick">候補を入力してください</strong>
+                <p id="blue-tan-detail">6〜9番人気、期待回収率150%以上、主要4欄のうち2欄以上が5位以内を判定します。</p>
+            </div>
+        </section>
+
         <section class="card odds-card">
             <div class="card-header">
-                <h2>候補馬 & オッズ</h2>
+                <h2>候補馬</h2>
                 <span id="horse-count" class="badge">0頭</span>
             </div>
 
-            <div id="odds-list">
-                <!-- JavaScriptでここに行を追加 -->
+            <div class="horse-grid-head">
+                <span>人気</span>
+                <span>単勝</span>
+                <span>指数</span>
+                <span>購入</span>
+                <span></span>
             </div>
+            <div id="odds-list"></div>
 
             <button id="add-horse-btn" class="btn-secondary">
-                <span>➕</span> 馬を追加
+                <span>+</span> 候補を追加
             </button>
         </section>
 
-        <!-- 計算結果表示 -->
         <section id="result-section" class="card result-card hidden">
             <div class="result-header">
-                <h2>💰 計算結果</h2>
+                <h2>計算結果</h2>
                 <div class="expected-return">
-                    <small>予想払戻</small>
+                    <small>最低払戻</small>
                     <span id="expected-payout">0</span>
                     <span class="unit">円</span>
                 </div>
@@ -103,75 +87,30 @@
             <div class="profit-info">
                 <div class="profit-item">
                     <span class="label">投資合計</span>
-                    <span id="total-investment">0</span>円
+                    <span><span id="total-investment">0</span>円</span>
                 </div>
                 <div class="profit-item highlight">
-                    <span class="label">予想利益</span>
-                    <span id="expected-profit">+0</span>円
+                    <span class="label">最低利益</span>
+                    <span><span id="expected-profit">+0</span>円</span>
                 </div>
                 <div class="profit-item">
                     <span class="label">回収率</span>
-                    <span id="return-rate">0</span>%
+                    <span><span id="return-rate">0</span>%</span>
                 </div>
                 <div class="profit-item">
                     <span class="label">合成オッズ</span>
-                    <span id="synthetic-odds">0.0</span>倍
+                    <span><span id="synthetic-odds">0.00</span>倍</span>
                 </div>
             </div>
 
-            <!-- Ad Space: Affiliate Link -->
-            <div class="ad-container">
-                <a href="https://px.a8.net/svt/ejp?a8mat=4AXE4I+9OW19U+4TIO+5YJRM" rel="nofollow" target="_blank">
-                    <div class="ad-content">
-                        <span class="ad-badge">PR</span>
-                        <strong>ahamo（アハモ）</strong>
-                        <p>月2,970円(税込)で20GB使い放題！<br>
-                            海外ローミングも無料。競馬場での快適通信に！ 🐎💨</p>
-                    </div>
-                </a>
-                <img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=4AXE4I+9OW19U+4TIO+5YJRM"
-                    alt="" style="display:none;">
-            </div>
-
-            <!-- Share Button -->
-            <button id="share-btn" class="btn-share">
-                <span>✖</span> X(Twitter)で配分をシェア
-            </button>
+            <button id="share-btn" class="btn-share">Xでシェア</button>
         </section>
-
-        <!-- SEO Footer / Guide -->
-        <footer class="app-footer">
-            <div class="seo-content">
-                <h3>このアプリについて</h3>
-                <p>
-                    競馬の「ダッチング（Dutching）」計算を簡単に行える無料ツールです。
-                    複数の馬に賭ける際、どの馬が当たっても払い戻し金額が均等になるように資金配分を自動で計算します。
-                </p>
-                <h4>使い方</h4>
-                <ol>
-                    <li>総予算を入力します。</li>
-                    <li>購入したい馬のオッズを入力します。</li>
-                    <li>自動的に最適な購入金額（100円単位）が計算されます。</li>
-                </ol>
-                <p class="copyright">© 2026 Odds Calculator PWA</p>
-            </div>
-        </footer>
     </main>
 
-    <script src="app.js?v=2.1"></script>
+    <script src="app.js?v=3.0"></script>
     <script>
-        // Simple loading screen hider
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loading');
-            loader.style.opacity = '0';
-            setTimeout(() => loader.remove(), 300);
-        });
-
-        // Service Worker Registration
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('SW registered!', reg))
-                .catch(err => console.log('SW failed', err));
+            navigator.serviceWorker.register('sw.js').catch(() => {});
         }
     </script>
 </body>

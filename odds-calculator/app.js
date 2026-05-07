@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- State ---
+    const BLUE_TAN_WIN_RATES = {
+        6: 0.0676,
+        7: 0.0596,
+        8: 0.0446,
+        9: 0.0206
+    };
+
     const state = {
         budget: 10000,
+        blueTan: {
+            favoriteOdds: 2.5,
+            minExpectedRoi: 150,
+            minIndexCount: 2
+        },
         horses: [
-            { id: 1, num: 1, odds: 2.5 },
-            { id: 2, num: 2, odds: 5.0 }
+            { id: 1, popularity: 6, odds: 23.0, indexCount: 2 },
+            { id: 2, popularity: 7, odds: 28.0, indexCount: 2 }
         ]
     };
 
-    // --- DOM Elements ---
     const els = {
         budgetInput: document.getElementById('total-budget'),
         oddsList: document.getElementById('odds-list'),
@@ -21,67 +31,94 @@ document.addEventListener('DOMContentLoaded', () => {
         returnRate: document.getElementById('return-rate'),
         syntheticOdds: document.getElementById('synthetic-odds'),
         horseCount: document.getElementById('horse-count'),
-        shareBtn: document.getElementById('share-btn')
+        shareBtn: document.getElementById('share-btn'),
+        blueTanFavoriteOdds: document.getElementById('blue-tan-favorite-odds'),
+        blueTanMinRoi: document.getElementById('blue-tan-min-roi'),
+        blueTanMinIndex: document.getElementById('blue-tan-min-index'),
+        blueTanStatus: document.getElementById('blue-tan-status'),
+        blueTanPick: document.getElementById('blue-tan-pick'),
+        blueTanDetail: document.getElementById('blue-tan-detail')
     };
 
-    // --- Init ---
     init();
 
     function init() {
+        bindEvents();
         renderHorses();
         calculate();
+    }
 
-        // Event Listeners
-        els.budgetInput.addEventListener('input', (e) => {
-            state.budget = parseInt(e.target.value) || 0;
+    function bindEvents() {
+        els.budgetInput.addEventListener('input', (event) => {
+            state.budget = parseInt(event.target.value, 10) || 0;
+            calculate();
+        });
+
+        els.blueTanFavoriteOdds.addEventListener('input', (event) => {
+            state.blueTan.favoriteOdds = parseFloat(event.target.value) || 0;
+            calculate();
+        });
+
+        els.blueTanMinRoi.addEventListener('input', (event) => {
+            state.blueTan.minExpectedRoi = parseFloat(event.target.value) || 0;
+            calculate();
+        });
+
+        els.blueTanMinIndex.addEventListener('input', (event) => {
+            state.blueTan.minIndexCount = parseInt(event.target.value, 10) || 0;
             calculate();
         });
 
         els.addBtn.addEventListener('click', addHorse);
         els.resetBtn.addEventListener('click', resetAll);
-        if (els.shareBtn) els.shareBtn.addEventListener('click', shareResult);
+        els.shareBtn.addEventListener('click', shareResult);
     }
 
-    // --- Actions ---
     function addHorse() {
-        const newId = (state.horses.length > 0 ? Math.max(...state.horses.map(h => h.id)) : 0) + 1;
-        const lastNum = state.horses.length > 0 ? state.horses[state.horses.length - 1].num : 0;
-
+        const newId = state.horses.length > 0 ? Math.max(...state.horses.map((horse) => horse.id)) + 1 : 1;
+        const lastPopularity = state.horses.length > 0 ? state.horses[state.horses.length - 1].popularity : 5;
         state.horses.push({
             id: newId,
-            num: lastNum + 1,
-            odds: 0
+            popularity: lastPopularity + 1,
+            odds: 0,
+            indexCount: 0
         });
         renderHorses();
         calculate();
     }
 
     function removeHorse(id) {
-        state.horses = state.horses.filter(h => h.id !== id);
+        state.horses = state.horses.filter((horse) => horse.id !== id);
         renderHorses();
         calculate();
     }
 
     function updateHorse(id, field, value) {
-        const horse = state.horses.find(h => h.id === id);
-        if (horse) {
-            horse[field] = parseFloat(value);
-            calculate();
-        }
+        const horse = state.horses.find((item) => item.id === id);
+        if (!horse) return;
+
+        const numericValue = field === 'popularity' || field === 'indexCount'
+            ? parseInt(value, 10) || 0
+            : parseFloat(value) || 0;
+        horse[field] = numericValue;
+        calculate();
     }
 
     function resetAll() {
-        if (!confirm('全ての入力をリセットしますか？')) return;
         state.budget = 10000;
-        state.horses = [
-            { id: 1, num: 1, odds: 0 }
-        ];
+        state.blueTan.favoriteOdds = 2.5;
+        state.blueTan.minExpectedRoi = 150;
+        state.blueTan.minIndexCount = 2;
+        state.horses = [{ id: 1, popularity: 6, odds: 0, indexCount: 0 }];
+
         els.budgetInput.value = state.budget;
+        els.blueTanFavoriteOdds.value = state.blueTan.favoriteOdds;
+        els.blueTanMinRoi.value = state.blueTan.minExpectedRoi;
+        els.blueTanMinIndex.value = state.blueTan.minIndexCount;
         renderHorses();
         calculate();
     }
 
-    // --- Rendering ---
     function renderHorses() {
         els.oddsList.innerHTML = '';
         els.horseCount.textContent = `${state.horses.length}頭`;
@@ -89,180 +126,199 @@ document.addEventListener('DOMContentLoaded', () => {
         state.horses.forEach((horse) => {
             const row = document.createElement('div');
             row.className = 'horse-row';
+            row.dataset.id = String(horse.id);
             row.innerHTML = `
-                <input type="number" class="horse-num-input" value="${horse.num}" placeholder="#" 
-                    onchange="app.updateHorse(${horse.id}, 'num', this.value)">
-                
+                <input type="number" class="horse-popularity-input" value="${horse.popularity || ''}" min="1" max="18" inputmode="numeric" aria-label="人気">
                 <div class="odds-input-group">
-                    <input type="number" value="${horse.odds || ''}" step="0.1" inputmode="decimal" placeholder="オッズ"
-                        oninput="app.updateHorse(${horse.id}, 'odds', this.value)">
+                    <input type="number" value="${horse.odds || ''}" step="0.1" min="0" inputmode="decimal" aria-label="単勝オッズ">
                 </div>
-
-                <div class="calc-result" id="result-${horse.id}">
-                    -
-                </div>
-
-                <button class="delete-btn" aria-label="削除" onclick="app.removeHorse(${horse.id})">
-                    ×
-                </button>
+                <input type="number" class="index-count-input" value="${horse.indexCount || 0}" min="0" max="4" inputmode="numeric" aria-label="指数欄数">
+                <div class="calc-result" id="result-${horse.id}">-</div>
+                <button class="delete-btn" aria-label="削除" title="削除">×</button>
             `;
+
+            row.querySelector('.horse-popularity-input').addEventListener('input', (event) => {
+                updateHorse(horse.id, 'popularity', event.target.value);
+            });
+            row.querySelector('.odds-input-group input').addEventListener('input', (event) => {
+                updateHorse(horse.id, 'odds', event.target.value);
+            });
+            row.querySelector('.index-count-input').addEventListener('input', (event) => {
+                updateHorse(horse.id, 'indexCount', event.target.value);
+            });
+            row.querySelector('.delete-btn').addEventListener('click', () => removeHorse(horse.id));
             els.oddsList.appendChild(row);
         });
     }
 
-    // --- Calculation Logic ---
+    function validHorses() {
+        return state.horses.filter((horse) => horse.odds > 0 && horse.popularity > 0);
+    }
+
+    function blueTanExpectedRoi(horse) {
+        const winRate = BLUE_TAN_WIN_RATES[horse.popularity] || 0;
+        return winRate * horse.odds * 100;
+    }
+
+    function findBlueTanPick(horses) {
+        if (state.blueTan.favoriteOdds >= 3.0) return null;
+
+        return [...horses]
+            .filter((horse) => horse.popularity >= 6 && horse.popularity <= 9)
+            .sort((a, b) => a.popularity - b.popularity)
+            .find((horse) => (
+                blueTanExpectedRoi(horse) >= state.blueTan.minExpectedRoi
+                && horse.indexCount >= state.blueTan.minIndexCount
+            )) || null;
+    }
+
+    function updateBlueTan(horses) {
+        const pick = findBlueTanPick(horses);
+
+        if (state.blueTan.favoriteOdds >= 3.0) {
+            setBlueTanResult(
+                '見送り',
+                'skip',
+                '1番人気オッズが3.0倍以上',
+                '青単は買わず、6〜9番人気を相手候補として扱う条件です。'
+            );
+            return;
+        }
+
+        if (!pick) {
+            setBlueTanResult(
+                '該当なし',
+                'neutral',
+                '条件達成馬なし',
+                `6〜9番人気、期待回収率${state.blueTan.minExpectedRoi}%以上、指数${state.blueTan.minIndexCount}欄以上を満たす馬がいません。`
+            );
+            return;
+        }
+
+        setBlueTanResult(
+            '買い',
+            'buy',
+            `${pick.popularity}番人気 / 単勝${pick.odds.toFixed(1)}倍`,
+            `期待回収率 ${blueTanExpectedRoi(pick).toFixed(1)}% / 指数${pick.indexCount}欄。人気順で最初に該当した1頭です。`
+        );
+    }
+
+    function setBlueTanResult(status, className, pickText, detailText) {
+        els.blueTanStatus.textContent = status;
+        els.blueTanStatus.className = `blue-tan-status ${className}`;
+        els.blueTanPick.textContent = pickText;
+        els.blueTanDetail.textContent = detailText;
+    }
+
     function calculate() {
-        const validHorses = state.horses.filter(h => h.odds > 0);
-        if (validHorses.length === 0 || state.budget <= 0) {
+        const horses = validHorses();
+        updateBlueTan(horses);
+
+        if (horses.length === 0 || state.budget <= 0) {
             els.resultSection.classList.add('hidden');
             return;
         }
 
-        // 1. Implied Probabilities
-        let totalImpliedProb = 0;
-        validHorses.forEach(h => {
-            h.ip = 1 / h.odds;
-            totalImpliedProb += h.ip;
-        });
+        const totalImpliedProb = horses.reduce((sum, horse) => sum + (1 / horse.odds), 0);
+        const stakes = allocateStakes(horses, totalImpliedProb);
+        renderStakeResults(horses, stakes, totalImpliedProb);
+    }
 
+    function allocateStakes(horses, totalImpliedProb) {
+        const stakes = {};
         let allocatedBudget = 0;
-        const results = {};
 
-        // 2. Allocate base stakes (floored to 100)
-        validHorses.forEach(h => {
-            let rawStake = state.budget * (h.ip / totalImpliedProb);
-            let stake100 = Math.floor(rawStake / 100) * 100;
-            results[h.id] = stake100;
+        horses.forEach((horse) => {
+            const rawStake = state.budget * ((1 / horse.odds) / totalImpliedProb);
+            const stake100 = Math.floor(rawStake / 100) * 100;
+            stakes[horse.id] = stake100;
             allocatedBudget += stake100;
         });
 
-        // 3. Distribute Remainder
         let remainder = state.budget - allocatedBudget;
-
         while (remainder >= 100) {
-            let bestHorseId = -1;
+            let bestHorseId = null;
             let minPayout = Infinity;
 
-            validHorses.forEach(h => {
-                const currentPayout = results[h.id] * h.odds;
+            horses.forEach((horse) => {
+                const currentPayout = stakes[horse.id] * horse.odds;
                 if (currentPayout < minPayout) {
                     minPayout = currentPayout;
-                    bestHorseId = h.id;
+                    bestHorseId = horse.id;
                 }
             });
 
-            if (bestHorseId !== -1) {
-                results[bestHorseId] += 100;
-                remainder -= 100;
-            } else {
-                break;
-            }
+            if (bestHorseId === null) break;
+            stakes[bestHorseId] += 100;
+            remainder -= 100;
         }
 
-        // --- Render Results ---
-        let minExpReturn = Infinity;
-        let maxExpReturn = -Infinity;
-        let totalInvest = 0;
+        return stakes;
+    }
 
-        validHorses.forEach(h => {
-            const stake = results[h.id];
-            totalInvest += stake;
-            const payout = Math.floor(stake * h.odds);
+    function renderStakeResults(horses, stakes, totalImpliedProb) {
+        let minPayout = Infinity;
+        let maxPayout = -Infinity;
+        let totalInvestment = 0;
 
-            if (payout < minExpReturn) minExpReturn = payout;
-            if (payout > maxExpReturn) maxExpReturn = payout;
+        const blueTanPick = findBlueTanPick(horses);
 
-            const resEl = document.getElementById(`result-${h.id}`);
-            if (resEl) {
-                if (stake > 0) {
-                    // Update: Show stake clearly and expected return small
-                    resEl.innerHTML = `
-                        <span style="font-size:1.1em; color:white">${stake.toLocaleString()}</span>
-                        <span style="font-size:0.7em">円</span><br>
-                        <span style="color:#888;font-size:0.7em">払:${payout.toLocaleString()}</span>
-                    `;
-                } else {
-                    resEl.innerHTML = `<span style="color:#555;font-size:0.8em">対象外</span>`;
-                }
-            }
+        horses.forEach((horse) => {
+            const stake = stakes[horse.id] || 0;
+            const payout = Math.floor(stake * horse.odds);
+            totalInvestment += stake;
+            minPayout = Math.min(minPayout, payout);
+            maxPayout = Math.max(maxPayout, payout);
+
+            const resultEl = document.getElementById(`result-${horse.id}`);
+            const rowEl = document.querySelector(`.horse-row[data-id="${horse.id}"]`);
+            if (rowEl) rowEl.classList.toggle('blue-tan-pick', Boolean(blueTanPick && blueTanPick.id === horse.id));
+            if (!resultEl) return;
+
+            resultEl.innerHTML = stake > 0
+                ? `<strong>${stake.toLocaleString()}</strong><small>円 / 払戻${payout.toLocaleString()}</small>`
+                : '<span class="muted">対象外</span>';
         });
 
-        if (totalInvest <= 0) {
+        if (totalInvestment <= 0) {
             els.resultSection.classList.add('hidden');
             return;
         }
 
+        const minProfit = minPayout - totalInvestment;
         els.resultSection.classList.remove('hidden');
-        els.totalInvestment.textContent = totalInvest.toLocaleString();
-
-        if (minExpReturn !== maxExpReturn) {
-            els.expectedPayout.textContent = `${minExpReturn.toLocaleString()}~`;
-        } else {
-            els.expectedPayout.textContent = minExpReturn.toLocaleString();
-        }
-
-        const minProfit = minExpReturn - totalInvest;
-        els.expectedProfit.textContent = (minProfit >= 0 ? '+' : '') + minProfit.toLocaleString();
+        els.totalInvestment.textContent = totalInvestment.toLocaleString();
+        els.expectedPayout.textContent = minPayout === maxPayout
+            ? minPayout.toLocaleString()
+            : `${minPayout.toLocaleString()}〜`;
+        els.expectedProfit.textContent = `${minProfit >= 0 ? '+' : ''}${minProfit.toLocaleString()}`;
         els.expectedProfit.style.color = minProfit < 0 ? 'var(--danger)' : 'var(--accent)';
-
-        const rate = Math.round((minExpReturn / totalInvest) * 100);
-        els.returnRate.textContent = rate;
-
-        // 合成オッズ = 1 ÷ 各オッズの逆数の合計
-        const syntheticOdds = (1 / totalImpliedProb).toFixed(2);
-        els.syntheticOdds.textContent = syntheticOdds;
+        els.returnRate.textContent = Math.round((minPayout / totalInvestment) * 100);
+        els.syntheticOdds.textContent = (1 / totalImpliedProb).toFixed(2);
     }
 
     function shareResult() {
-        const validHorses = state.horses.filter(h => h.odds > 0);
-        if (validHorses.length === 0) return;
+        const horses = validHorses();
+        if (horses.length === 0) return;
 
-        let text = `🐴 競馬資金配分\n💰 予算: ${state.budget.toLocaleString()}円\n\n`;
+        const totalImpliedProb = horses.reduce((sum, horse) => sum + (1 / horse.odds), 0);
+        const stakes = allocateStakes(horses, totalImpliedProb);
+        const blueTanPick = findBlueTanPick(horses);
+        const minPayout = Math.min(...horses.map((horse) => Math.floor(stakes[horse.id] * horse.odds)));
+        const totalInvestment = horses.reduce((sum, horse) => sum + (stakes[horse.id] || 0), 0);
+        const profit = minPayout - totalInvestment;
 
-        // Re-calculate simply for text generation
-        let totalImpliedProb = 0;
-        validHorses.forEach(h => totalImpliedProb += (1 / h.odds));
+        const lines = [
+            '競馬 合成オッズ計算',
+            `予算: ${state.budget.toLocaleString()}円`,
+            `合成オッズ: ${(1 / totalImpliedProb).toFixed(2)}倍`,
+            `最低利益: ${profit >= 0 ? '+' : ''}${profit.toLocaleString()}円`,
+            blueTanPick ? `青単: ${blueTanPick.popularity}番人気 ${blueTanPick.odds.toFixed(1)}倍` : '青単: 見送り/該当なし',
+            '',
+            ...horses.map((horse) => `${horse.popularity}番人気 ${horse.odds}倍 -> ${stakes[horse.id].toLocaleString()}円`)
+        ];
 
-        let allocated = 0;
-        const results = {};
-        validHorses.forEach(h => {
-            let raw = state.budget * ((1 / h.odds) / totalImpliedProb);
-            let val = Math.floor(raw / 100) * 100;
-            results[h.id] = val;
-            allocated += val;
-        });
-
-        // Distribute remainder (simple version for text)
-        let remainder = state.budget - allocated;
-        // Naive distribution for text match: just add to first few
-        // Note: This might slightly differ from exact logic but good enough for share text
-        // or we can implement exact logic. Let's try to match exact logic quickly.
-        while (remainder >= 100) {
-            let bestId = -1; let minP = Infinity;
-            validHorses.forEach(h => {
-                let p = results[h.id] * h.odds;
-                if (p < minP) { minP = p; bestId = h.id; }
-            });
-            if (bestId !== -1) { results[bestId] += 100; remainder -= 100; }
-            else break;
-        }
-
-        validHorses.forEach((h, i) => {
-            const stake = results[h.id];
-            text += `#${h.num} (${h.odds}倍) → ${stake.toLocaleString()}円\n`;
-        });
-
-        const minPayout = Math.min(...validHorses.map(h => Math.floor(results[h.id] * h.odds)));
-        const profit = minPayout - state.budget;
-
-        text += `\n🎯 予想利益: ${profit >= 0 ? '+' : ''}${profit.toLocaleString()}円\n`;
-        text += `#競馬 #オッズ計算 #資金配分`;
-
-        const url = "https://keny0823.github.io/kakuyasu-simlab/odds-calculator/";
-        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(lines.join('\n'))}`;
         window.open(shareUrl, '_blank');
     }
-
-    window.app = { addHorse, removeHorse, updateHorse, resetAll };
 });
